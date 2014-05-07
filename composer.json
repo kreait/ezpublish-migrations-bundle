@@ -1,0 +1,37 @@
+{
+    "name": "kreait/ezpublish-migrations-bundle",
+    "description": "Migrations for eZ Publish 5",
+    "keywords": ["Migrations", "eZ Publish"],
+    "homepage": "https://github.com/kreait/ezpublish-migrations-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jérôme Gamez",
+            "homepage": "https://github.com/jeromegamez",
+            "email": "jerome@kreait.com"
+        },
+        {
+            "name": "The GitHub Community",
+            "homepage": "https://github.com/kreait/EzPublishMigrationsBundle/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "doctrine/migrations": "~1.0@dev"
+    },
+    "require-dev": {
+        "symfony/config": "~2",
+        "symfony/console": "~2",
+        "symfony/dependency-injection": "~2",
+        "symfony/http-kernel": "~2",
+        "symfony/yaml": "~2"
+    },
+    "autoload": {
+        "psr-4": { "Kreait\\EzPublish\\MigrationsBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
