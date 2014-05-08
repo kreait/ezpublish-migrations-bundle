@@ -79,65 +79,7 @@ for further information.
 
 ## Examples
 
-### Enable users with the 'Anonymous' role to access the siteacess 'mysiteaccess' without having to log in
-
-```bash
-$ ezpublish/console ezpublish:migrations:generate
-Generated new migration class to "/var/www/ezpublish/EzPublishMigrations/Version20140508021924.php"
-```
-
-```php
-// ezpublish/EzPublishMigrations/Version20140508021924.php
-namespace Application\Migrations;
-
-use ...
-
-class Version20140508021924 extends AbstractEzPublishMigration
-{
-    /**
-     * @var string
-     */
-    private $siteAccessIdentifier = 'mysiteaccess';
-
-    /**
-     * Adds access to a new siteaccess for the role 'Anonymous'
-     *
-     * @param Schema $schema
-     */
-    public function up(Schema $schema)
-    {
-        $userService = $this->repository->getUserService();
-        $roleService = $this->repository->getRoleService();
-
-        $administratorUser = $userService->loadUser(14);
-        $this->repository->setCurrentUser($administratorUser);
-
-        $role = $roleService->loadRole(1); // Anonymous
-
-        $limitation = new SiteAccessLimitation();
-        $limitation->limitationValues[] = sprintf('%u', crc32($this->siteAccessIdentifier));
-
-        $policy = $roleService->newPolicyCreateStruct('user', 'login');
-        $policy->addLimitation($limitation);
-
-        $roleService->addPolicy($role, $policy);
-
-        $message = sprintf("SELECT 'Added SiteAccess limitation for \"%s\" to role \"%s\"'", $this->siteAccessIdentifier, $role->identifier);
-        $this->addSql($message);
-    }
-
-    /**
-     * Removes access to the new siteaccess for the role 'Anonymous'
-     *
-     * @param Schema $schema
-     */
-    public function down(Schema $schema)
-    {
-        $this->addSql("SELECT 'We should probably remove access to {$this->siteAccessIdentifier} here'");
-    }
-}
-
-```
+See [Resources/doc/examples](Resources/doc/examples) for some usage examples.
 
 ## Caveats
 
