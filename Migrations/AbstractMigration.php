@@ -8,6 +8,7 @@
 namespace Kreait\EzPublish\MigrationsBundle\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration as BaseAbstractMigration;
+use Doctrine\DBAL\Schema\Schema;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -15,6 +16,40 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 abstract class AbstractMigration extends BaseAbstractMigration implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
+
+    /**
+     * @var \eZ\Publish\API\Repository\Repository
+     */
+    protected $repository;
+
+    /**
+     * Initializes eZ Publish related service shortcuts
+     *
+     * @param Schema $schema
+     */
+    protected function pre(Schema $schema)
+    {
+        $this->repository = $this->container->get('ezpublish.api.repository');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function preUp(Schema $schema)
+    {
+        parent::preUp($schema);
+        $this->pre($schema);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function preDown(Schema $schema)
+    {
+        parent::preDown($schema);
+        $this->pre($schema);
+    }
+
 
     /**
      * Returns the container
