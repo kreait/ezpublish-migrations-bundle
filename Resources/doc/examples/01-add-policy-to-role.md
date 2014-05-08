@@ -32,10 +32,6 @@ class Version20140507140029 extends AbstractEzPublishMigration
      */
     public function up(Schema $schema)
     {
-        $userService = $this->repository->getUserService();
-        $administratorUser = $userService->loadUser( 14 );
-        $this->repository->setCurrentUser( $administratorUser );
-
         $roleService = $this->repository->getRoleService();
 
         $role = $roleService->loadRole(1); // Anonymous

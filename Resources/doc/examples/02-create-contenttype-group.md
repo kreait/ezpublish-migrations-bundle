@@ -31,12 +31,7 @@ class Version20140508144959 extends AbstractEzPublishMigration
      */
     public function up(Schema $schema)
     {
-        $userService = $this->repository->getUserService();
         $contentTypeService = $this->repository->getContentTypeService();
-
-        // Set current user to admin
-        $administratorUser = $userService->loadUser( 14 );
-        $this->repository->setCurrentUser( $administratorUser );
 
         // Check if the group already exists
         $existingGroups = $contentTypeService->loadContentTypeGroups();
