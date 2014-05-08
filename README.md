@@ -4,7 +4,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/kreait/ezpublish-migrations-bundle/v/unstable.png)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
 [![License](https://poser.pugx.org/kreait/ezpublish-migrations-bundle/license.png)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
 
-Migrations for eZ Publish 5, almost identical to Symfony's
+Migrations for eZ Publish 5, very similar to Symfony's
 [DoctrineMigrationsBundle](https://github.com/doctrine/DoctrineMigrationsBundle).
 
 
@@ -100,7 +100,7 @@ class Version20140508021924 extends AbstractEzPublishMigration
     private $siteAccessIdentifier = 'mysiteaccess';
 
     /**
-     * Removes all existing siteaccess limitations and adds a new one for the role 'Anonymous'
+     * Adds access to a new siteaccess for the role 'Anonymous'
      *
      * @param Schema $schema
      */
@@ -109,8 +109,8 @@ class Version20140508021924 extends AbstractEzPublishMigration
         /** @var $repository \eZ\Publish\API\Repository\Repository */
         $repository = $this->getContainer()->get('ezpublish.api.repository');
         $userService = $repository->getUserService();
-        $administratorUser = $userService->loadUser( 14 );
-        $repository->setCurrentUser( $administratorUser );
+        $administratorUser = $userService->loadUser(14);
+        $repository->setCurrentUser($administratorUser);
 
         $roleService = $repository->getRoleService();
 
@@ -164,6 +164,6 @@ public function up(Schema $schema)
 
 ## Acknowledgments
 
-- [Doctrine Project](http://www.doctrine-project.org/) for providing the underlying migration functionality
-- [Symfony](http://symfony.com/) for being the blueprint for this bundle
+- [Doctrine Project](http://www.doctrine-project.org/) for the [Doctrine Database Migrations](https://github.com/doctrine/migrations) providing the underlying migration functionality
+- [Symfony](http://symfony.com/) for the [DoctrineMigrationsBundle](https://github.com/doctrine/DoctrineMigrationsBundle) being the blueprint for this bundle
 - [Magic Internet GmbH](http://www.magicinternet.de/), especially [@m-keil](https://github.com/m-keil) for the initial methodical blueprint
