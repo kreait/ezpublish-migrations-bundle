@@ -74,7 +74,7 @@ ezpublish:migrations
 
 The usage is identical to Symfony's DoctrineMigrationBundle, except for the missing `:diff` command.
 Please have a look at the
-[official documention](http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html)
+[official documentation](http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html)
 for further information.
 
 ## Examples
