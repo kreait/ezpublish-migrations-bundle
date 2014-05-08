@@ -18,6 +18,13 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     use ContainerAwareTrait;
 
     /**
+     * An administrator's user id
+     *
+     * @var int
+     */
+    protected $adminUserId = 14;
+
+    /**
      * @var \eZ\Publish\API\Repository\Repository
      */
     protected $repository;
@@ -39,6 +46,8 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     {
         parent::preUp($schema);
         $this->pre($schema);
+
+        $this->setAdminAsCurrentUser();
     }
 
     /**
@@ -48,6 +57,8 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     {
         parent::preDown($schema);
         $this->pre($schema);
+
+        $this->setAdminAsCurrentUser();
     }
 
 
@@ -60,5 +71,15 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     protected function getContainer()
     {
         return $this->container;
+    }
+
+    /**
+     * Sets an admin user as the current user, so that all operations are allowed
+     */
+    protected function setAdminAsCurrentUser()
+    {
+        $userService = $this->repository->getUserService();
+        $adminUser = $userService->loadUser($this->adminUserId);
+        $this->repository->setCurrentUser($adminUser);
     }
 }
