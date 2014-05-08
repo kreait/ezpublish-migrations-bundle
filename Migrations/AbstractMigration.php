@@ -19,6 +19,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     /**
      * Returns the container
      *
+     * @deprecated 1.0.1 Use <code>$this->container</code> instead
      * @return ContainerInterface
      */
     protected function getContainer()
