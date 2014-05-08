@@ -9,31 +9,19 @@ namespace Kreait\EzPublish\MigrationsBundle\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration as BaseAbstractMigration;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class AbstractMigration extends BaseAbstractMigration implements ContainerAwareInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * Sets the container
-     *
-     * @param ContainerInterface $container
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
+    use ContainerAwareTrait;
 
     /**
      * Returns the container
      *
      * @return ContainerInterface
      */
-    public function getContainer()
+    protected function getContainer()
     {
         return $this->container;
     }
