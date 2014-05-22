@@ -18,18 +18,19 @@ trait CommandTrait
 {
     protected function configureMigrations(ContainerInterface $container, Configuration $configuration)
     {
-        $dir = $container->getParameter('ezpublish_migrations.dir_name');
-        if (!file_exists($dir)) {
-            mkdir($dir, 0777, true);
+        $dir = $container->getParameter( 'ezpublish_migrations.dir_name' );
+        if ( !file_exists( $dir ) )
+        {
+            mkdir( $dir, 0777, true );
         }
 
-        $configuration->setMigrationsNamespace($container->getParameter('ezpublish_migrations.namespace'));
-        $configuration->setMigrationsDirectory($dir);
-        $configuration->registerMigrationsFromDirectory($dir);
-        $configuration->setName($container->getParameter('ezpublish_migrations.name'));
-        $configuration->setMigrationsTableName($container->getParameter('ezpublish_migrations.table_name'));
+        $configuration->setMigrationsNamespace( $container->getParameter( 'ezpublish_migrations.namespace' ) );
+        $configuration->setMigrationsDirectory( $dir );
+        $configuration->registerMigrationsFromDirectory( $dir );
+        $configuration->setName( $container->getParameter( 'ezpublish_migrations.name' ) );
+        $configuration->setMigrationsTableName( $container->getParameter( 'ezpublish_migrations.table_name' ) );
 
-        self::injectContainerToMigrations($container, $configuration->getMigrations());
+        self::injectContainerToMigrations( $container, $configuration->getMigrations() );
     }
 
     /**
@@ -40,14 +41,15 @@ trait CommandTrait
      */
     protected function injectContainerToMigrations(ContainerInterface $container, array $versions)
     {
-        foreach ($versions as $version) {
+        foreach ( $versions as $version )
+        {
             $migration = $version->getMigration();
-            if ($migration instanceof ContainerAwareInterface) {
-                $migration->setContainer($container);
+            if ( $migration instanceof ContainerAwareInterface )
+            {
+                $migration->setContainer( $container );
             }
         }
     }
-
 
     /**
      * Generates a doctrine configuration object with eZ Publish's database connection
@@ -58,10 +60,15 @@ trait CommandTrait
      */
     protected function getBasicConfiguration(ContainerInterface $container, OutputInterface $output)
     {
-        $outputWriter = new OutputWriter(function($message) use ($output) {
-            return $output->writeln($message);
-        });
+        $outputWriter = new OutputWriter(
+            function( $message ) use ( $output )
+            {
+                // @codeCoverageIgnoreStart
+                return $output->writeln( $message );
+                // @codeCoverageIgnoreEnd
+            }
+        );
 
-        return new Configuration($container->get( 'ezpublish.connection' )->getConnection(), $outputWriter);
+        return new Configuration( $container->get( 'ezpublish.connection' )->getConnection(), $outputWriter );
     }
-} 
+}

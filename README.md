@@ -2,9 +2,12 @@
 
 [![Latest Stable Version](https://poser.pugx.org/kreait/ezpublish-migrations-bundle/v/stable.png)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
 [![Latest Unstable Version](https://poser.pugx.org/kreait/ezpublish-migrations-bundle/v/unstable.png)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
+[![Build Status](https://secure.travis-ci.org/kreait/ezpublish-migrations-bundle.png?branch=master)](http://travis-ci.org/kreait/ezpublish-migrations-bundle)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/?branch=master)
 [![License](https://poser.pugx.org/kreait/ezpublish-migrations-bundle/license.png)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
 
-Migrations for eZ Publish 5, very similar to Symfony's
+Migrations for eZ Publish 5, based on [Doctrine Migrations](https://github.com/doctrine/migrations), very similar to Symfony's
 [DoctrineMigrationsBundle](https://github.com/doctrine/DoctrineMigrationsBundle).
 
 

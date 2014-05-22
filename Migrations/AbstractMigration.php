@@ -36,7 +36,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
      */
     protected function pre(Schema $schema)
     {
-        $this->repository = $this->container->get('ezpublish.api.repository');
+        $this->repository = $this->container->get( 'ezpublish.api.repository' );
     }
 
     /**
@@ -44,8 +44,8 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
      */
     public function preUp(Schema $schema)
     {
-        parent::preUp($schema);
-        $this->pre($schema);
+        parent::preUp( $schema );
+        $this->pre( $schema );
 
         $this->setAdminAsCurrentUser();
     }
@@ -55,17 +55,17 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
      */
     public function preDown(Schema $schema)
     {
-        parent::preDown($schema);
-        $this->pre($schema);
+        parent::preDown( $schema );
+        $this->pre( $schema );
 
         $this->setAdminAsCurrentUser();
     }
-
 
     /**
      * Returns the container
      *
      * @deprecated 1.0.1 Use <code>$this->container</code> instead
+     * @codeCoverageIgnore
      * @return ContainerInterface
      */
     protected function getContainer()
@@ -79,7 +79,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     protected function setAdminAsCurrentUser()
     {
         $userService = $this->repository->getUserService();
-        $adminUser = $userService->loadUser($this->adminUserId);
-        $this->repository->setCurrentUser($adminUser);
+        $adminUser = $userService->loadUser( $this->adminUserId );
+        $this->repository->setCurrentUser( $adminUser );
     }
 }

@@ -23,9 +23,14 @@
         "symfony/config": "~2.3",
         "symfony/console": "~2.3",
         "symfony/dependency-injection": "~2.3",
+        "symfony/framework-bundle": "~2.3",
+        "symfony/finder": "~2.3",
         "symfony/http-kernel": "~2.3",
-        "symfony/yaml": "~2.3",
-        "ezsystems/ezpublish-kernel": "@dev"
+        "ezsystems/ezpublish-kernel": "@dev",
+        "phpunit/phpunit": "~4.0",
+        "mockery/mockery": "dev-master",
+        "squizlabs/php_codesniffer": "~1.5",
+        "ezsystems/ezcs": "dev-master"
     },
     "autoload": {
         "psr-4": { "Kreait\\EzPublish\\MigrationsBundle\\": "" }

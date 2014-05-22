@@ -36,16 +36,15 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root($this->rootIdentifier);
+        $rootNode = $treeBuilder->root( $this->rootIdentifier );
 
         $rootNode
             ->children()
-            ->scalarNode('dir_name')->defaultValue('%kernel.root_dir%/EzPublishMigrations')->cannotBeEmpty()->end()
-            ->scalarNode('namespace')->defaultValue('Application\Migrations')->cannotBeEmpty()->end()
-            ->scalarNode('table_name')->defaultValue('ezmigration_versions')->cannotBeEmpty()->end()
-            ->scalarNode('name')->defaultValue('Application Migrations')->end()
-            ->end()
-        ;
+            ->scalarNode( 'dir_name' )->defaultValue( '%kernel.root_dir%/EzPublishMigrations' )->cannotBeEmpty()->end()
+            ->scalarNode( 'namespace' )->defaultValue( 'Application\Migrations' )->cannotBeEmpty()->end()
+            ->scalarNode( 'table_name' )->defaultValue( 'ezmigration_versions' )->cannotBeEmpty()->end()
+            ->scalarNode( 'name' )->defaultValue( 'Application Migrations' )->end()
+            ->end();
 
         return $treeBuilder;
     }

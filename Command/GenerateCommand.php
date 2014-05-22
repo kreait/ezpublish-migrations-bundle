@@ -23,16 +23,15 @@ class GenerateCommand extends BaseGenerateCommand
 
     protected $template =
             '<?php
-
 namespace <namespace>;
 
-use Kreait\EzPublish\MigrationsBundle\Migrations\AbstractMigration as AbstractEzPublishMigration;
+use Kreait\EzPublish\MigrationsBundle\Migrations\AbstractMigration as EzPublishMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version<version> extends AbstractEzPublishMigration
+class Version<version> extends EzPublishMigration
 {
     /**
      * Description of this up migration
@@ -62,9 +61,9 @@ class Version<version> extends AbstractEzPublishMigration
      */
     protected function configure()
     {
-        BaseGenerateCommand::configure();
+        parent::configure();
 
-        $this->setName('ezpublish:migrations:generate');
+        $this->setName( 'ezpublish:migrations:generate' );
     }
 
     /**
@@ -72,15 +71,17 @@ class Version<version> extends AbstractEzPublishMigration
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var \Symfony\Bundle\FrameworkBundle\Console\Application $app */
+        $app = $this->getApplication();
         /** @var ContainerInterface $container */
-        $container = $this->getApplication()->getKernel()->getContainer();
+        $container = $app->getKernel()->getContainer();
 
-        $this->setMigrationConfiguration($this->getBasicConfiguration($container, $output));
+        $this->setMigrationConfiguration( $this->getBasicConfiguration( $container, $output ) );
 
-        $configuration = $this->getMigrationConfiguration($input, $output);
-        $this->configureMigrations($container, $configuration);
+        $configuration = $this->getMigrationConfiguration( $input, $output );
+        $this->configureMigrations( $container, $configuration );
 
-        BaseGenerateCommand::execute($input, $output);
+        parent::execute( $input, $output );
     }
 
     /**
@@ -92,28 +93,32 @@ class Version<version> extends AbstractEzPublishMigration
             '<namespace>',
             '<version>',
             '<up>',
-            '<down>'
+            '<down>',
         );
         $replacements = array(
             $configuration->getMigrationsNamespace(),
             $version,
-            $up ? "        " . implode("\n        ", explode("\n", $up)) : null,
-            $down ? "        " . implode("\n        ", explode("\n", $down)) : null
+            $up ? "        " . implode( "\n        ", explode( "\n", $up ) ) : null,
+            $down ? "        " . implode( "\n        ", explode( "\n", $down ) ) : null
         );
-        $code = str_replace($placeHolders, $replacements, $this->template);
+        $code = str_replace( $placeHolders, $replacements, $this->template );
         $dir = $configuration->getMigrationsDirectory();
         $dir = $dir ? $dir : getcwd();
-        $dir = rtrim($dir, '/');
+        $dir = rtrim( $dir, '/' );
         $path = $dir . '/Version' . $version . '.php';
 
-        if ( ! file_exists($dir)) {
-            throw new \InvalidArgumentException(sprintf('Migrations directory "%s" does not exist.', $dir));
+        if ( !file_exists( $dir ) )
+        {
+            // @codeCoverageIgnoreStart
+            throw new \InvalidArgumentException( sprintf( 'Migrations directory "%s" does not exist.', $dir ) );
+            // @codeCoverageIgnoreEnd
         }
 
-        file_put_contents($path, $code);
+        file_put_contents( $path, $code );
 
-        if ($editorCmd = $input->getOption('editor-cmd')) {
-            shell_exec($editorCmd . ' ' . escapeshellarg($path));
+        if ( $editorCmd = $input->getOption( 'editor-cmd' ) )
+        {
+            shell_exec( $editorCmd . ' ' . escapeshellarg( $path ) );
         }
 
         return $path;
