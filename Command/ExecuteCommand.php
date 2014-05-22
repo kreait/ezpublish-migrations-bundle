@@ -25,9 +25,9 @@ class ExecuteCommand extends BaseExecuteCommand
      */
     protected function configure()
     {
-        BaseExecuteCommand::configure();
+        parent::configure();
 
-        $this->setName('ezpublish:migrations:execute');
+        $this->setName( 'ezpublish:migrations:execute' );
     }
 
     /**
@@ -35,14 +35,16 @@ class ExecuteCommand extends BaseExecuteCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var \Symfony\Bundle\FrameworkBundle\Console\Application $app */
+        $app = $this->getApplication();
         /** @var ContainerInterface $container */
-        $container = $this->getApplication()->getKernel()->getContainer();
+        $container = $app->getKernel()->getContainer();
 
-        $this->setMigrationConfiguration($this->getBasicConfiguration($container, $output));
+        $this->setMigrationConfiguration( $this->getBasicConfiguration( $container, $output ) );
 
-        $configuration = $this->getMigrationConfiguration($input, $output);
-        $this->configureMigrations($container, $configuration);
+        $configuration = $this->getMigrationConfiguration( $input, $output );
+        $this->configureMigrations( $container, $configuration );
 
-        BaseExecuteCommand::execute($input, $output);
+        parent::execute( $input, $output );
     }
 }

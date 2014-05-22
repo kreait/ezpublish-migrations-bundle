@@ -22,21 +22,23 @@ class MigrateCommand extends BaseMigrateCommand
 
     protected function configure()
     {
-        BaseMigrateCommand::configure();
+        parent::configure();
 
-        $this->setName('ezpublish:migrations:migrate');
+        $this->setName( 'ezpublish:migrations:migrate' );
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var \Symfony\Bundle\FrameworkBundle\Console\Application $app */
+        $app = $this->getApplication();
         /** @var ContainerInterface $container */
-        $container = $this->getApplication()->getKernel()->getContainer();
+        $container = $app->getKernel()->getContainer();
 
-        $this->setMigrationConfiguration($this->getBasicConfiguration($container, $output));
+        $this->setMigrationConfiguration( $this->getBasicConfiguration( $container, $output ) );
 
-        $configuration = $this->getMigrationConfiguration($input, $output);
-        $this->configureMigrations($container, $configuration);
+        $configuration = $this->getMigrationConfiguration( $input, $output );
+        $this->configureMigrations( $container, $configuration );
 
-        BaseMigrateCommand::execute($input, $output);
+        parent::execute( $input, $output );
     }
 }

@@ -22,21 +22,23 @@ class VersionCommand extends BaseVersionCommand
 
     protected function configure()
     {
-        BaseVersionCommand::configure();
+        parent::configure();
 
-        $this->setName('ezpublish:migrations:version');
+        $this->setName( 'ezpublish:migrations:version' );
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var \Symfony\Bundle\FrameworkBundle\Console\Application $app */
+        $app = $this->getApplication();
         /** @var ContainerInterface $container */
-        $container = $this->getApplication()->getKernel()->getContainer();
+        $container = $app->getKernel()->getContainer();
 
-        $this->setMigrationConfiguration($this->getBasicConfiguration($container, $output));
+        $this->setMigrationConfiguration( $this->getBasicConfiguration( $container, $output ) );
 
-        $configuration = $this->getMigrationConfiguration($input, $output);
-        $this->configureMigrations($container, $configuration);
+        $configuration = $this->getMigrationConfiguration( $input, $output );
+        $this->configureMigrations( $container, $configuration );
 
-        BaseVersionCommand::execute($input, $output);
+        parent::execute( $input, $output );
     }
 }

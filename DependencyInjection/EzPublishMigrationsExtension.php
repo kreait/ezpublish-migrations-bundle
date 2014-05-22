@@ -9,7 +9,6 @@ namespace Kreait\EzPublish\MigrationsBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -23,11 +22,12 @@ class EzPublishMigrationsExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration($this->getAlias());
-        $config = $this->processConfiguration($configuration, $configs);
+        $configuration = new Configuration( $this->getAlias() );
+        $config = $this->processConfiguration( $configuration, $configs );
 
-        foreach ($config as $key => $value) {
-            $container->setParameter($this->getAlias().'.'.$key, $value);
+        foreach ( $config as $key => $value )
+        {
+            $container->setParameter( $this->getAlias().'.'.$key, $value );
         }
     }
 
