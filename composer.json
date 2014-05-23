@@ -1,7 +1,7 @@
 {
     "name": "kreait/ezpublish-migrations-bundle",
     "description": "Migrations for eZ Publish 5",
-    "keywords": ["Migrations", "eZ Publish"],
+    "keywords": ["migrations", "ezpublish"],
     "homepage": "https://github.com/kreait/ezpublish-migrations-bundle",
     "license": "MIT",
     "authors": [
