@@ -12,7 +12,7 @@
         },
         {
             "name": "The GitHub Community",
-            "homepage": "https://github.com/kreait/EzPublishMigrationsBundle/graphs/contributors"
+            "homepage": "https://github.com/kreait/ezpublish-migrations-bundle/graphs/contributors"
         }
     ],
     "require": {
