@@ -83,14 +83,14 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Mocked repository - we don't need to test it, we just have to call its methods
      *
-     * @return \Mockery\MockInterface|\eZ\Publish\Core\Repository\Repository
+     * @return \Mockery\MockInterface|\eZ\Publish\API\Repository\Repository
      */
     protected function getEzRepository()
     {
         $userService = $this->getEzUserService();
         $contentService = $this->getEzContentService();
 
-        $repository = \Mockery::mock( 'eZ\Publish\Core\Repository\Repository' )
+        $repository = \Mockery::mock( 'eZ\Publish\API\Repository\Repository' )
             ->shouldIgnoreMissing()
 
             ->shouldReceive( 'getUserService' )
@@ -109,11 +109,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Mockery\MockInterface|\eZ\Publish\Core\Repository\UserService
+     * @return \Mockery\MockInterface|\eZ\Publish\API\Repository\UserService
      */
     protected function getEzUserService()
     {
-        $userService = \Mockery::mock( 'eZ\Publish\Core\Repository\UserService' )
+        $userService = \Mockery::mock( 'eZ\Publish\API\Repository\UserService' )
             ->shouldIgnoreMissing()
             ->shouldReceive( 'loadUser' )
             ->andReturn( \Mockery::mock( 'eZ\Publish\API\Repository\Values\User\User' ) )
@@ -123,11 +123,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Mockery\MockInterface|\eZ\Publish\Core\Repository\ContentService
+     * @return \Mockery\MockInterface|\eZ\Publish\API\Repository\ContentService
      */
     protected function getEzContentService()
     {
-        $service = \Mockery::mock( 'eZ\Publish\Core\Repository\ContentService' )
+        $service = \Mockery::mock( 'eZ\Publish\API\Repository\ContentService' )
             ->shouldIgnoreMissing();
 
         return $service;
