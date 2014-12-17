@@ -29,6 +29,7 @@ class VersionCommandTest extends TestCase
                 'command' => $command->getName(),
                 'version' => $versionString,
                 '--add' => true,
+                '--no-interaction' => true,
             )
         );
 
