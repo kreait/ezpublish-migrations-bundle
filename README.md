@@ -1,11 +1,10 @@
 # eZ Publish 5 Migrations
 
-[![Latest Stable Version](https://poser.pugx.org/kreait/ezpublish-migrations-bundle/v/stable.png)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
-[![Latest Unstable Version](https://poser.pugx.org/kreait/ezpublish-migrations-bundle/v/unstable.png)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
-[![Build Status](https://secure.travis-ci.org/kreait/ezpublish-migrations-bundle.png?branch=master)](http://travis-ci.org/kreait/ezpublish-migrations-bundle)
-[![Code Coverage](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/?branch=master)
-[![License](https://poser.pugx.org/kreait/ezpublish-migrations-bundle/license.png)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
+[![Latest Stable Version](https://img.shields.io/packagist/v/kreait/ezpublish-migrations-bundle.svg?style=flat-square)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
+[![Build Status](https://img.shields.io/travis/kreait/ezpublish-migrations-bundle.svg?style=flat-square)](http://travis-ci.org/kreait/ezpublish-migrations-bundle)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/kreait/ezpublish-migrations-bundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/?branch=master)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/kreait/ezpublish-migrations-bundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/?branch=master)
+[![License](http://img.shields.io/badge/Licence-MIT-brightgreen.svg?style=flat-square)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
 
 Migrations for eZ Publish 5, based on [Doctrine Migrations](https://github.com/doctrine/migrations), very similar to Symfony's
 [DoctrineMigrationsBundle](https://github.com/doctrine/DoctrineMigrationsBundle).
