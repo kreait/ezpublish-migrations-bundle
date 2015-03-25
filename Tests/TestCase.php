@@ -195,7 +195,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Returns the an application mock which returns a mocked kernel
      *
-     * @return Application
+     * @return \Mockery\MockInterface|Application
      */
     protected function getApplication()
     {
@@ -282,7 +282,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Returns the version number from a string
      *
-     * @param $string
+     * @param string $string
      * @return string
      *
      * @throws \RuntimeException
