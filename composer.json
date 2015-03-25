@@ -6,9 +6,12 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "kreait",
-            "homepage": "https://github.com/kreait",
-            "email": "dev@kreait.com"
+          "name": "Jérôme Gamez",
+          "homepage": "https://github.com/jeromegamez"
+        },
+        {
+          "name": "kreait",
+          "homepage": "https://github.com/kreait"
         }
     ],
     "require": {
@@ -22,10 +25,10 @@
         "symfony/framework-bundle": "~2.3",
         "symfony/finder": "~2.3",
         "symfony/http-kernel": "~2.3",
-        "ezsystems/ezpublish-api": "v2014.11.6",
-        "ezsystems/ezpublish-spi": "v2014.11.6",
+        "ezsystems/ezpublish-api": ">=2014.11",
+        "ezsystems/ezpublish-spi": ">=2014.11",
         "phpunit/phpunit": "~4.0",
-        "mockery/mockery": "dev-master",
+        "mockery/mockery": "0.9.*",
         "squizlabs/php_codesniffer": "~1.5",
         "ezsystems/ezcs": "dev-master"
     },
