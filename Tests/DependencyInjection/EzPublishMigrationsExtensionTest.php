@@ -22,6 +22,7 @@ class EzPublishMigrationsExtensionTest extends TestCase
             'namespace' => $this->migrationsNamespace,
             'table_name' => 'ezmigration_versions',
             'name' => 'Application Migrations',
+            'ez_user' => $this->migrationUser,
         );
 
         foreach ( $checks as $key => $value )

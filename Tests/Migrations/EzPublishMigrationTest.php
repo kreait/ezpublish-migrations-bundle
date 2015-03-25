@@ -17,6 +17,37 @@ class EzPublishMigrationTest extends TestCase
      * @param string $direction "up" or "down"
      * @dataProvider directionProvider
      */
+    public function testGetMigrationUser($direction)
+    {
+        $versionString = $this->generateMigrationAndReturnVersionString();
+        $namespace = $this->container->getParameter( 'ezpublish_migrations.namespace' );
+        $config = $this->getSqliteConfiguration();
+
+        $fullClassName = $namespace . '\\Version'.$versionString;
+        $filePath = $this->container->getParameter( 'ezpublish_migrations.dir_name' ) . '/Version' . $versionString . '.php';
+
+        $this->assertTrue( $this->fs->exists( $filePath ) );
+
+        require $filePath;
+
+        $version = new Version( $config, $versionString, $fullClassName );
+
+        $migration = $version->getMigration();
+        if ( $migration instanceof ContainerAwareInterface )
+        {
+            $migration->setContainer( $this->container );
+        }
+
+        $version->execute( $direction, true );
+
+        $this->assertAttributeEquals($this->migrationUser, 'defaultMigrationUser', $migration);
+        $this->assertAttributeEquals($this->migrationUser, 'currentMigrationUser', $migration);
+    }
+
+    /**
+     * @param string $direction "up" or "down"
+     * @dataProvider directionProvider
+     */
     public function testMigration($direction)
     {
         $versionString = $this->generateMigrationAndReturnVersionString();

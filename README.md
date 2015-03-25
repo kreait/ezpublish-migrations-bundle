@@ -59,6 +59,7 @@ ezpublish_migrations:
     namespace: Application\Migrations
     table_name: ezmigration_versions
     name: Application Migrations
+    ez_user: admin
 ```
 
 ## Usage
