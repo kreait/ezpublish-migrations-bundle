@@ -47,7 +47,15 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected $application;
 
+    /**
+     * @var string
+     */
     protected $migrationsNamespace;
+
+    /**
+     * @var string
+     */
+    protected $migrationUser;
 
     protected function setUp()
     {
@@ -58,6 +66,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $uniqId = uniqid();
         $this->rootDir = __DIR__ . '/Temporary' . $uniqId;
         $this->migrationsNamespace = 'Kreait\EzPublish\MigrationsBundle\Tests\Temporary' . $uniqId;
+        $this->migrationUser = $uniqId;
 
         $this->extension = new EzPublishMigrationsExtension();
         $this->container = $this->getContainer();
@@ -70,6 +79,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         $this->container->loadFromExtension( $this->extension->getAlias() );
         $this->container->setParameter( 'ezpublish_migrations.namespace', $this->migrationsNamespace );
+        $this->container->setParameter( 'ezpublish_migrations.ez_user', $this->migrationUser);
         $this->container->compile();
 
         $this->application = $this->getApplication();
@@ -115,11 +125,22 @@ class TestCase extends \PHPUnit_Framework_TestCase
     {
         $userService = \Mockery::mock( 'eZ\Publish\API\Repository\UserService' )
             ->shouldIgnoreMissing()
-            ->shouldReceive( 'loadUser' )
-            ->andReturn( \Mockery::mock( 'eZ\Publish\API\Repository\Values\User\User' ) )
+            ->shouldReceive( 'loadUserByLogin' )
+            ->andReturn( $this->getEzUser() )
             ->getMock();
 
         return $userService;
+    }
+
+    /**
+     * @return \Mockery\MockInterface|\eZ\Publish\API\Repository\Values\User\User
+     */
+    protected function getEzUser()
+    {
+        $user = \Mockery::mock( 'eZ\Publish\API\Repository\Values\User\User' )
+            ->shouldIgnoreMissing();
+
+        return $user;
     }
 
     /**

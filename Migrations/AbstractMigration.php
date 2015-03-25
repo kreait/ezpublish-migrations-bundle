@@ -18,16 +18,28 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     use ContainerAwareTrait;
 
     /**
-     * An administrator's user id
+     * The username of the default migration user
      *
-     * @var int
+     * @var string
      */
-    protected $adminUserId = 14;
+    private $defaultMigrationUser;
+
+    /**
+     * The username of the current migration user
+     *
+     * @var string
+     */
+    private $currentMigrationUser;
 
     /**
      * @var \eZ\Publish\API\Repository\Repository
      */
-    protected $repository;
+    private $repository;
+
+    /**
+     * @var \eZ\Publish\API\Repository\UserService
+     */
+    private $userService;
 
     /**
      * Initializes eZ Publish related service shortcuts
@@ -37,6 +49,12 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     protected function pre(Schema $schema)
     {
         $this->repository = $this->container->get( 'ezpublish.api.repository' );
+        $this->userService = $this->repository->getUserService();
+
+        $this->defaultMigrationUser = $this->container->getParameter( 'ezpublish_migrations.ez_user');
+        $this->currentMigrationUser = $this->defaultMigrationUser;
+
+        $this->setDefaultMigrationUser();
     }
 
     /**
@@ -46,8 +64,6 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     {
         parent::preUp( $schema );
         $this->pre( $schema );
-
-        $this->setAdminAsCurrentUser();
     }
 
     /**
@@ -57,8 +73,24 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     {
         parent::preDown( $schema );
         $this->pre( $schema );
+    }
 
-        $this->setAdminAsCurrentUser();
+    /**
+     * Sets the current user to the user with the given name
+     *
+     * @param string $username
+     */
+    protected function changeMigrationUser($username)
+    {
+        $this->setMigrationUser($username);
+    }
+
+    /**
+     * Sets the current user to the default migration user.
+     */
+    protected function restoreDefaultMigrationUser()
+    {
+        $this->setDefaultMigrationUser();
     }
 
     /**
@@ -74,12 +106,22 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     }
 
     /**
-     * Sets an admin user as the current user, so that all operations are allowed
+     * Sets the current ez user the the default migration user
      */
-    protected function setAdminAsCurrentUser()
+    private function setDefaultMigrationUser()
     {
-        $userService = $this->repository->getUserService();
-        $adminUser = $userService->loadUser( $this->adminUserId );
-        $this->repository->setCurrentUser( $adminUser );
+        $this->setMigrationUser($this->defaultMigrationUser);
+    }
+
+    /**
+     * Sets the current ez user to the user with the given user name.
+     *
+     * @param string $username
+     */
+    private function setMigrationUser($username)
+    {
+        $this->repository->setCurrentUser(
+            $this->userService->loadUserByLogin( $username )
+        );
     }
 }

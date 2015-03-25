@@ -59,6 +59,7 @@ ezpublish_migrations:
     namespace: Application\Migrations
     table_name: ezmigration_versions
     name: Application Migrations
+    ez_user: admin
 ```
 
 ## Usage
@@ -79,7 +80,21 @@ Please have a look at the
 [official documentation](http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html)
 for further information.
 
-## Examples
+### Changing the current migration user during a migration
+
+You can change the current eZ Publish user inside a migration by issuing the following command:
+
+```php
+$this->changeMigrationUser('another_username');
+```
+
+and restore the default Migration user by using:
+
+```php
+$this->restoreDefaultMigrationUser();
+```
+
+## Usage examples
 
 See [Resources/doc/examples](Resources/doc/examples) for some usage examples.
 
