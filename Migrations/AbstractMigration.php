@@ -34,7 +34,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     /**
      * @var \eZ\Publish\API\Repository\Repository
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @var \eZ\Publish\API\Repository\UserService
