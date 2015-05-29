@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## Unreleased
+## 1.2 - 2015-05-29
 
-- Pin doctrine/migrations - the latest master did not work anymore.
+- Pin doctrine/migrations - the latest master did not work anymore. Please update your project's `composer.json` to
+  use `"doctrine/migrations": "1.0.0-alpha3"`.
 
 ## 1.1.1 - 2015-03-31
 
