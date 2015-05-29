@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": ">=5.4",
-        "doctrine/migrations": "~1.0@dev"
+        "doctrine/migrations": "1.0.0-alpha3"
     },
     "require-dev": {
         "symfony/config": "~2.3",

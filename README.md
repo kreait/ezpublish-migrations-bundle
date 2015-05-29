@@ -20,7 +20,7 @@ Add the following to your composer.json file:
 ```
 {
     "require": {
-        "doctrine/migrations": "dev-master",
+        "doctrine/migrations": "1.0.0-alpha3",
         "kreait/ezpublish-migrations-bundle": "~1.0"
     }
 }
