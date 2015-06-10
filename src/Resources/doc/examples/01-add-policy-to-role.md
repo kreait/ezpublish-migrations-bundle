@@ -14,13 +14,13 @@ namespace Application\Migrations;
 use eZ\Publish\API\Repository\RoleService;
 use eZ\Publish\API\Repository\Values\User\Limitation\SiteAccessLimitation;
 use eZ\Publish\API\Repository\Values\User\Role;
-use Kreait\EzPublish\MigrationsBundle\Migrations\AbstractMigration as AbstractEzPublishMigration;
+use Kreait\EzPublish\MigrationsBundle\Migrations\AbstractMigration as EzPublishMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
  * Enables the anonymous user to access a siteaccess without having to log in
  */
-class Version20140507140029 extends AbstractEzPublishMigration
+class Version20140507140029 extends EzPublishMigration
 {
     /**
      * @var string

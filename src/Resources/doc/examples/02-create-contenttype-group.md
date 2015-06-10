@@ -13,13 +13,13 @@ Generated new migration class to "/var/www/ezpublish/EzPublishMigrations/Version
 
 namespace Application\Migrations;
 
-use Kreait\EzPublish\MigrationsBundle\Migrations\AbstractMigration as AbstractEzPublishMigration;
+use Kreait\EzPublish\MigrationsBundle\Migrations\AbstractMigration as EzPublishMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
  * Creates a new content type group
  */
-class Version20140508144959 extends AbstractEzPublishMigration
+class Version20140508144959 extends EzPublishMigration
 {
     /**
      * @var string

@@ -96,7 +96,7 @@ $this->restoreDefaultMigrationUser();
 
 ## Usage examples
 
-See [Resources/doc/examples](Resources/doc/examples) for some usage examples.
+See [src/Resources/doc/examples](src/Resources/doc/examples) for some usage examples.
 
 ## Caveats
 
