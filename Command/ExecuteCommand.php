@@ -1,16 +1,24 @@
 <?php
+
+/*
+ * This file is part of the kreait eZ Publish Migrations Bundle.
+ *
+ * This source file is subject to the license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
- * This file is part of the kreait eZ Publish Migrations Bundle
+ * This file is part of the kreait eZ Publish Migrations Bundle.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 namespace Kreait\EzPublish\MigrationsBundle\Command;
 
+use Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand as BaseExecuteCommand;
 use Kreait\EzPublish\MigrationsBundle\Traits\CommandTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand as BaseExecuteCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -27,7 +35,7 @@ class ExecuteCommand extends BaseExecuteCommand
     {
         parent::configure();
 
-        $this->setName( 'ezpublish:migrations:execute' );
+        $this->setName('ezpublish:migrations:execute');
     }
 
     /**
@@ -40,11 +48,11 @@ class ExecuteCommand extends BaseExecuteCommand
         /** @var ContainerInterface $container */
         $container = $app->getKernel()->getContainer();
 
-        $this->setMigrationConfiguration( $this->getBasicConfiguration( $container, $output ) );
+        $this->setMigrationConfiguration($this->getBasicConfiguration($container, $output));
 
-        $configuration = $this->getMigrationConfiguration( $input, $output );
-        $this->configureMigrations( $container, $configuration );
+        $configuration = $this->getMigrationConfiguration($input, $output);
+        $this->configureMigrations($container, $configuration);
 
-        parent::execute( $input, $output );
+        parent::execute($input, $output);
     }
 }

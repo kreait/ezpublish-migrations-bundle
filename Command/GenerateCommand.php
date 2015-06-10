@@ -1,6 +1,14 @@
 <?php
+
+/*
+ * This file is part of the kreait eZ Publish Migrations Bundle.
+ *
+ * This source file is subject to the license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
- * This file is part of the kreait eZ Publish Migrations Bundle
+ * This file is part of the kreait eZ Publish Migrations Bundle.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -8,10 +16,10 @@
 namespace Kreait\EzPublish\MigrationsBundle\Command;
 
 use Doctrine\DBAL\Migrations\Configuration\Configuration;
+use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand as BaseGenerateCommand;
 use Kreait\EzPublish\MigrationsBundle\Traits\CommandTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand as BaseGenerateCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -63,7 +71,7 @@ class Version<version> extends EzPublishMigration
     {
         parent::configure();
 
-        $this->setName( 'ezpublish:migrations:generate' );
+        $this->setName('ezpublish:migrations:generate');
     }
 
     /**
@@ -76,12 +84,12 @@ class Version<version> extends EzPublishMigration
         /** @var ContainerInterface $container */
         $container = $app->getKernel()->getContainer();
 
-        $this->setMigrationConfiguration( $this->getBasicConfiguration( $container, $output ) );
+        $this->setMigrationConfiguration($this->getBasicConfiguration($container, $output));
 
-        $configuration = $this->getMigrationConfiguration( $input, $output );
-        $this->configureMigrations( $container, $configuration );
+        $configuration = $this->getMigrationConfiguration($input, $output);
+        $this->configureMigrations($container, $configuration);
 
-        parent::execute( $input, $output );
+        parent::execute($input, $output);
     }
 
     /**
@@ -89,36 +97,34 @@ class Version<version> extends EzPublishMigration
      */
     protected function generateMigration(Configuration $configuration, InputInterface $input, $version, $up = null, $down = null)
     {
-        $placeHolders = array(
+        $placeHolders = [
             '<namespace>',
             '<version>',
             '<up>',
             '<down>',
-        );
-        $replacements = array(
+        ];
+        $replacements = [
             $configuration->getMigrationsNamespace(),
             $version,
-            $up ? "        " . implode( "\n        ", explode( "\n", $up ) ) : null,
-            $down ? "        " . implode( "\n        ", explode( "\n", $down ) ) : null
-        );
-        $code = str_replace( $placeHolders, $replacements, $this->template );
+            $up ? '        '.implode("\n        ", explode("\n", $up)) : null,
+            $down ? '        '.implode("\n        ", explode("\n", $down)) : null,
+        ];
+        $code = str_replace($placeHolders, $replacements, $this->template);
         $dir = $configuration->getMigrationsDirectory();
         $dir = $dir ? $dir : getcwd();
-        $dir = rtrim( $dir, '/' );
-        $path = $dir . '/Version' . $version . '.php';
+        $dir = rtrim($dir, '/');
+        $path = $dir.'/Version'.$version.'.php';
 
-        if ( !file_exists( $dir ) )
-        {
+        if (!file_exists($dir)) {
             // @codeCoverageIgnoreStart
-            throw new \InvalidArgumentException( sprintf( 'Migrations directory "%s" does not exist.', $dir ) );
+            throw new \InvalidArgumentException(sprintf('Migrations directory "%s" does not exist.', $dir));
             // @codeCoverageIgnoreEnd
         }
 
-        file_put_contents( $path, $code );
+        file_put_contents($path, $code);
 
-        if ( $editorCmd = $input->getOption( 'editor-cmd' ) )
-        {
-            shell_exec( $editorCmd . ' ' . escapeshellarg( $path ) );
+        if ($editorCmd = $input->getOption('editor-cmd')) {
+            shell_exec($editorCmd.' '.escapeshellarg($path));
         }
 
         return $path;

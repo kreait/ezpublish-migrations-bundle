@@ -1,6 +1,14 @@
 <?php
+
+/*
+ * This file is part of the kreait eZ Publish Migrations Bundle.
+ *
+ * This source file is subject to the license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
- * This file is part of the kreait eZ Publish Migrations Bundle
+ * This file is part of the kreait eZ Publish Migrations Bundle.
  */
 namespace Kreait\EzPublish\MigrationsBundle;
 

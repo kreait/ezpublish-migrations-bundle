@@ -1,14 +1,26 @@
 <?php
+
+/*
+ * This file is part of the kreait eZ Publish Migrations Bundle.
+ *
+ * This source file is subject to the license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
-* This file is part of the kreait eZ Publish Migrations Bundle
+ * This file is part of the kreait eZ Publish Migrations Bundle.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
-*/
+ */
 namespace Kreait\EzPublish\MigrationsBundle\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration as BaseAbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException;
+use eZ\Publish\API\Repository\Exceptions\ContentValidationException;
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
+use eZ\Publish\API\Repository\Values\Content\Content;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -18,14 +30,14 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     use ContainerAwareTrait;
 
     /**
-     * The username of the default migration user
+     * The username of the default migration user.
      *
      * @var string
      */
     private $defaultMigrationUser;
 
     /**
-     * The username of the current migration user
+     * The username of the current migration user.
      *
      * @var string
      */
@@ -42,16 +54,16 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     private $userService;
 
     /**
-     * Initializes eZ Publish related service shortcuts
+     * Initializes eZ Publish related service shortcuts.
      *
      * @param Schema $schema
      */
     protected function pre(Schema $schema)
     {
-        $this->repository = $this->container->get( 'ezpublish.api.repository' );
+        $this->repository = $this->container->get('ezpublish.api.repository');
         $this->userService = $this->repository->getUserService();
 
-        $this->defaultMigrationUser = $this->container->getParameter( 'ezpublish_migrations.ez_user');
+        $this->defaultMigrationUser = $this->container->getParameter('ezpublish_migrations.ez_user');
         $this->currentMigrationUser = $this->defaultMigrationUser;
 
         $this->setDefaultMigrationUser();
@@ -62,8 +74,8 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
      */
     public function preUp(Schema $schema)
     {
-        parent::preUp( $schema );
-        $this->pre( $schema );
+        parent::preUp($schema);
+        $this->pre($schema);
     }
 
     /**
@@ -71,12 +83,12 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
      */
     public function preDown(Schema $schema)
     {
-        parent::preDown( $schema );
-        $this->pre( $schema );
+        parent::preDown($schema);
+        $this->pre($schema);
     }
 
     /**
-     * Sets the current user to the user with the given name
+     * Sets the current user to the user with the given name.
      *
      * @param string $username
      */
@@ -94,10 +106,11 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     }
 
     /**
-     * Returns the container
+     * Returns the container.
      *
      * @deprecated 1.0.1 Use <code>$this->container</code> instead
      * @codeCoverageIgnore
+     *
      * @return ContainerInterface
      */
     protected function getContainer()
@@ -106,7 +119,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     }
 
     /**
-     * Sets the current ez user the the default migration user
+     * Sets the current ez user the the default migration user.
      */
     private function setDefaultMigrationUser()
     {
@@ -121,7 +134,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     private function setMigrationUser($username)
     {
         $this->repository->setCurrentUser(
-            $this->userService->loadUserByLogin( $username )
+            $this->userService->loadUserByLogin($username)
         );
     }
 
