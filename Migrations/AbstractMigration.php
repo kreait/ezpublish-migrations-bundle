@@ -124,4 +124,49 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
             $this->userService->loadUserByLogin( $username )
         );
     }
+
+    /**
+     * Helper to quickly create content.
+     *
+     * @see https://github.com/ezsystems/CookbookBundle/blob/master/Command/CreateContentCommand.php eZ Publish Cookbook
+     *
+     * Usage:
+     * <code>
+     * $this->createContent(2, 'folder', 'eng-GB', [
+     *     'title' => 'Folder Title',
+     * ]);
+     * </code>
+     *
+     * @param int    $parentLocationId
+     * @param string $contentTypeIdentifier
+     * @param string $languageCode
+     * @param array  $fields
+     *
+     * @throws NotFoundException               If the content type or parent location could not be found
+     * @throws ContentFieldValidationException If an invalid field value has been provided
+     * @throws ContentValidationException      If a required field is missing or empty
+     *
+     * @return Content
+     */
+    protected function createContent($parentLocationId, $contentTypeIdentifier, $languageCode, array $fields)
+    {
+        /** @var $repository \eZ\Publish\API\Repository\Repository */
+        $repository = $this->container->get('ezpublish.api.repository');
+        $contentService = $repository->getContentService();
+        $locationService = $repository->getLocationService();
+        $contentTypeService = $repository->getContentTypeService();
+
+        $contentType = $contentTypeService->loadContentTypeByIdentifier($contentTypeIdentifier);
+        $contentCreateStruct = $contentService->newContentCreateStruct($contentType, $languageCode);
+
+        foreach ($fields as $key => $value) {
+            $contentCreateStruct->setField($key, $value);
+        }
+
+        $locationCreateStruct = $locationService->newLocationCreateStruct($parentLocationId);
+        $draft = $contentService->createContent($contentCreateStruct, [$locationCreateStruct]);
+        $content = $contentService->publishVersion($draft->getVersionInfo());
+
+        return $content;
+    }
 }
