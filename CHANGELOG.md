@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Unreleased
+
+- Easily create new contents with `$this->createContent()`, 
+  see [documentation](src/Resources/doc/examples/03-create-new-content.md) 
+- Moved sources and tests to `src` and `test` directories
+
 ## 1.2 - 2015-05-29
 
 - Pin doctrine/migrations - the latest master did not work anymore. Please update your project's `composer.json` to
