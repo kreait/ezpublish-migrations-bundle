@@ -28,7 +28,7 @@ class Version20150610145137 extends EzPublishMigration
             'short_name' => 'New folder'
         ]);
 
-        $this->addSql(sprintf("SELECT \"Created new Folder group '%s'\"", 'New folder'));
+        $this->addSql(sprintf("SELECT \"Created new Folder '%s'\"", 'New folder'));
     }
 
     /**
