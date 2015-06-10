@@ -6,7 +6,7 @@
         colors="true">
     <testsuites>
         <testsuite name="Kreait\EzPublish\MigrationsBundle">
-            <directory>Tests</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 
@@ -14,8 +14,8 @@
         <whitelist>
             <directory suffix=".php">.</directory>
             <exclude>
-                <directory>Resources</directory>
-                <directory>Tests</directory>
+                <directory>src/Resources</directory>
+                <directory>tests</directory>
                 <directory>vendor</directory>
             </exclude>
             <exclude>
