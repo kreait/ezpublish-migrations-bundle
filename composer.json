@@ -28,12 +28,17 @@
         "ezsystems/ezpublish-api": ">=2014.11",
         "ezsystems/ezpublish-spi": ">=2014.11",
         "phpunit/phpunit": "~4.5",
-        "mockery/mockery": "0.9.*",
-        "squizlabs/php_codesniffer": "~1.5",
-        "ezsystems/ezcs": "dev-master"
+        "mockery/mockery": "0.9.*"
     },
     "autoload": {
-        "psr-4": { "Kreait\\EzPublish\\MigrationsBundle\\": "" }
+        "psr-4": {
+            "Kreait\\EzPublish\\MigrationsBundle\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kreait\\EzPublish\\MigrationsBundle\\Tests\\": "tests"
+        }
     },
     "extra": {
         "branch-alias": {
