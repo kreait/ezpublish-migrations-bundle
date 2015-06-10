@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 1.3 - 2015-06-10
 
 - Easily create new contents with `$this->createContent()`, 
   see [documentation](src/Resources/doc/examples/03-create-new-content.md) 
