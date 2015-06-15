@@ -19,13 +19,11 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Migrations\Configuration\Configuration;
 use Kreait\EzPublish\MigrationsBundle\Command\GenerateCommand;
 use Kreait\EzPublish\MigrationsBundle\DependencyInjection\EzPublishMigrationsExtension;
-use Symfony\Component\Console\Application;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -76,12 +74,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $this->migrationUser = $uniqId;
 
         $this->extension = new EzPublishMigrationsExtension();
-        $this->container = $this->getContainer();
+        $this->container = new ContainerBuilder();
 
         $this->container->registerExtension($this->extension);
         $this->container->setParameter('kernel.root_dir', $this->rootDir);
 
-        $this->container->set('ezpublish.connection', $this->getSqliteConnection());
+        $this->container->set('ezpublish.connection', $this->getEzPersistenceHandler());
         $this->container->set('ezpublish.api.repository', $this->getEzRepository());
 
         $this->container->loadFromExtension($this->extension->getAlias());
@@ -100,97 +98,89 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Mocked repository - we don't need to test it, we just have to call its methods.
      *
-     * @return \Mockery\MockInterface|\eZ\Publish\API\Repository\Repository
+     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\Repository
      */
     protected function getEzRepository()
     {
-        $userService = $this->getEzUserService();
-        $contentService = $this->getEzContentService();
-        $contentTypeService = $this->getEzContentTypeService();
-        $locationService = $this->getEzLocationService();
+        $repository = $this->getMock('eZ\Publish\API\Repository\Repository');
 
-        $repository = \Mockery::mock('eZ\Publish\API\Repository\Repository')
-            ->shouldIgnoreMissing()
+        $repository
+            ->expects($this->any())
+            ->method('getUserService')
+            ->willReturn($this->getEzUserService());
 
-            ->shouldReceive('getUserService')
-            ->andReturn($userService)
-            ->getMock()
+        $repository
+            ->expects($this->any())
+            ->method('getContentService')
+            ->willReturn($this->getEzContentService());
 
-            ->shouldReceive('getContentService')
-            ->andReturn($contentService)
-            ->getMock()
+        $repository
+            ->expects($this->any())
+            ->method('getContentTypeService')
+            ->willReturn($this->getEzContentTypeService());
 
-            ->shouldReceive('getContentTypeService')
-            ->andReturn($contentTypeService)
-            ->getMock()
+        $repository
+            ->expects($this->any())
+            ->method('getLocationService')
+            ->willReturn($this->getEzLocationService());
 
-            ->shouldReceive('getLocationService')
-            ->andReturn($locationService)
-            ->getMock()
-
-            ->shouldReceive('setCurrentUser')
-            ->andReturnNull()
-            ->getMock();
+        $repository
+            ->expects($this->any())
+            ->method('setCurrentUser');
 
         return $repository;
     }
 
     /**
-     * @return \Mockery\MockInterface|\eZ\Publish\API\Repository\UserService
+     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\UserService
      */
     protected function getEzUserService()
     {
-        $userService = \Mockery::mock('eZ\Publish\API\Repository\UserService')
-            ->shouldIgnoreMissing()
-            ->shouldReceive('loadUserByLogin')
-            ->andReturn($this->getEzUser())
-            ->getMock();
+        $userService = $this->getMock('eZ\Publish\API\Repository\UserService');
+
+        $userService
+            ->expects($this->any())
+            ->method('loadUserByLogin')
+            ->willReturn($this->getEzUser());
 
         return $userService;
     }
 
     /**
-     * @return \Mockery\MockInterface|\eZ\Publish\API\Repository\Values\User\User
+     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\Values\User\User
      */
     protected function getEzUser()
     {
-        $user = \Mockery::mock('eZ\Publish\API\Repository\Values\User\User')
-            ->shouldIgnoreMissing();
+        $user = $this->getMockBuilder('eZ\Publish\API\Repository\Values\User\User')
+            ->getMock();
 
         return $user;
     }
 
     /**
-     * @return \Mockery\MockInterface|\eZ\Publish\API\Repository\ContentService
+     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\ContentService
      */
     protected function getEzContentService()
     {
-        $service = \Mockery::mock('eZ\Publish\API\Repository\ContentService')
-            ->shouldIgnoreMissing();
+        $service = $this->getMock('eZ\Publish\API\Repository\ContentService');
 
         return $service;
     }
 
     /**
-     * @return \Mockery\MockInterface|\eZ\Publish\API\Repository\ContentTypeService
+     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\ContentTypeService
      */
     protected function getEzContentTypeService()
     {
-        $service = \Mockery::mock('eZ\Publish\API\Repository\ContentTypeService')
-            ->shouldIgnoreMissing();
-
-        return $service;
+        return $this->getMock('eZ\Publish\API\Repository\ContentTypeService');
     }
 
     /**
-     * @return \Mockery\MockInterface|\eZ\Publish\API\Repository\LocationService
+     * @return \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\LocationService
      */
     protected function getEzLocationService()
     {
-        $service = \Mockery::mock('eZ\Publish\API\Repository\LocationService')
-            ->shouldIgnoreMissing();
-
-        return $service;
+        return $this->getMock('eZ\Publish\API\Repository\LocationService');
     }
 
     /**
@@ -213,45 +203,36 @@ class TestCase extends \PHPUnit_Framework_TestCase
         return new Configuration($this->getSqliteConnection());
     }
 
-    /**
-     * @return ContainerBuilder
-     */
-    public function getContainer()
+    public function getEzPersistenceHandler()
     {
-        $ezConnection = \Mockery::mock('eZ\Publish\SPI\Persistence\Handler[getConnection]')
-            ->shouldReceive('getConnection')
-            ->andReturn($this->getSqliteConnection())
-            ->getMock();
+        $handler = $this->getMockBuilder('eZ\Publish\SPI\Persistence\Handler')
+            ->setMethods(['getConnection'])
+            ->getMockForAbstractClass();
 
-        $container = \Mockery::mock('Symfony\Component\DependencyInjection\ContainerBuilder[get]')
-            ->shouldDeferMissing()
-            ->shouldReceive('get')
-            ->with('ezpublish.connection')
-            ->andReturn($ezConnection)
-            ->getMock();
+        $handler
+            ->expects($this->any())
+            ->method('getConnection')
+            ->willReturn($this->getSqliteConnection());
 
-        return $container;
+        return $handler;
     }
 
     /**
      * Returns the an application mock which returns a mocked kernel.
      *
-     * @return \Mockery\MockInterface|Application
+     * @return Application
      */
     protected function getApplication()
     {
-        $kernel = \Mockery::mock(
-            'Symfony\Component\HttpKernel\HttpKernel[getContainer]',
-            [new EventDispatcher(), new ControllerResolver()]
-        )
-            ->shouldReceive('getContainer')
-            ->andReturn($this->container)
-            ->getMock();
+        /** @var \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\HttpKernel\KernelInterface $kernel */
+        $kernel = $this->getMock('Symfony\Component\HttpKernel\KernelInterface');
 
-        $app = \Mockery::mock('Symfony\Component\Console\Application[getKernel]')
-            ->shouldReceive('getKernel')
-            ->andReturn($kernel)
-            ->getMock();
+        $kernel
+            ->expects($this->any())
+            ->method('getContainer')
+            ->willReturn($this->container);
+
+        $app = new Application($kernel);
 
         return $app;
     }

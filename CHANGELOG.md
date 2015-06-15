@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+- Removed Mockery as a dependency
+
 ## 1.3 - 2015-06-10
 
 - Easily create new contents with `$this->createContent()`, 

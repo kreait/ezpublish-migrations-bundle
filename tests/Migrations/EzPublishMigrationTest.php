@@ -90,24 +90,48 @@ class EzPublishMigrationTest extends TestCase
             $migration->setContainer($this->container);
         }
 
-        $createStruct = \Mockery::mock('eZ\Publish\API\Repository\Values\Content\ContentCreateStruct');
-        $contentType = \Mockery::mock('eZ\Publish\API\Repository\Values\ContentType\ContentType');
-        $versionInfo = \Mockery::mock('eZ\Publish\API\Repository\Values\Content\VersionInfo');
-        $content = \Mockery::mock('eZ\Publish\API\Repository\Values\Content\Content');
+        $createStruct = $this->getMock('eZ\Publish\API\Repository\Values\Content\ContentCreateStruct');
+        $contentType = $this->getMock('eZ\Publish\API\Repository\Values\ContentType\ContentType');
+        $versionInfo = $this->getMock('eZ\Publish\API\Repository\Values\Content\VersionInfo');
+        $content = $this->getMock('eZ\Publish\API\Repository\Values\Content\Content');
 
-        $content->shouldReceive('getVersionInfo')->andReturn($versionInfo);
+        $content
+            ->expects($this->once())
+            ->method('getVersionInfo')
+            ->willReturn($versionInfo);
 
-        /** @var @var \Mockery\MockInterface|\eZ\Publish\API\Repository\Repository $repository */
+        /** @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\Repository $repository */
         $repository = $this->container->get('ezpublish.api.repository');
+
+        /** @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit_Framework_MockObject_MockObject $contentTypeService */
         $contentTypeService = $repository->getContentTypeService();
-        $contentTypeService->shouldReceive('loadContentTypeByIdentifier')->andReturn($contentType);
 
+        $contentTypeService
+            ->expects($this->any())
+            ->method('loadContentTypeByIdentifier')
+            ->willReturn($contentType);
+
+        /** @var \eZ\Publish\API\Repository\ContentService|\PHPUnit_Framework_MockObject_MockObject $contentService */
         $contentService = $repository->getContentService();
-        $contentService->shouldReceive('newContentCreateStruct')->andReturn($createStruct);
-        $contentService->shouldReceive('createContent')->andReturn($content);
-        $contentService->shouldReceive('publishDraft')->andReturn($content);
+        $contentService
+            ->expects($this->once())
+            ->method('newContentCreateStruct')
+            ->willReturn($createStruct);
 
-        $createStruct->shouldReceive('setField')->withArgs(['title', 'Title'])->times(1);
+        $contentService
+            ->expects($this->once())
+            ->method('createContent')
+            ->willReturn($content);
+
+        $contentService
+            ->expects($this->once())
+            ->method('publishVersion')
+            ->willReturn($content);
+
+        $createStruct
+            ->expects($this->once())
+            ->method('setField')
+            ->with('title', 'Title');
 
         $version->execute('up', true);
     }
