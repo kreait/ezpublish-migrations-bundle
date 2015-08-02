@@ -7,12 +7,6 @@
  * with this source code in the file LICENSE.
  */
 
-/**
- * This file is part of the kreait eZ Publish Migrations Bundle.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 namespace Kreait\EzPublish\MigrationsBundle\Command;
 
 use Doctrine\DBAL\Migrations\Tools\Console\Command\LatestCommand as BaseLatestCommand;
@@ -28,9 +22,6 @@ class LatestCommand extends BaseLatestCommand
 {
     use CommandTrait;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function configure()
     {
         parent::configure();
@@ -38,9 +29,6 @@ class LatestCommand extends BaseLatestCommand
         $this->setName('ezpublish:migrations:latest');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var \Symfony\Bundle\FrameworkBundle\Console\Application $app */

@@ -7,12 +7,6 @@
  * with this source code in the file LICENSE.
  */
 
-/**
- * This file is part of the kreait eZ Publish Migrations Bundle.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 namespace Kreait\EzPublish\MigrationsBundle\Command;
 
 use Doctrine\DBAL\Migrations\Configuration\Configuration;
@@ -64,9 +58,7 @@ class Version<version> extends EzPublishMigration
     }
 }
 ';
-    /**
-     * {@inheritDoc}
-     */
+
     protected function configure()
     {
         parent::configure();
@@ -74,9 +66,6 @@ class Version<version> extends EzPublishMigration
         $this->setName('ezpublish:migrations:generate');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var \Symfony\Bundle\FrameworkBundle\Console\Application $app */
@@ -92,9 +81,6 @@ class Version<version> extends EzPublishMigration
         parent::execute($input, $output);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateMigration(Configuration $configuration, InputInterface $input, $version, $up = null, $down = null)
     {
         $placeHolders = [

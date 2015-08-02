@@ -7,40 +7,38 @@
  * with this source code in the file LICENSE.
  */
 
-/**
- * This file is part of the kreait eZ Publish Migrations Bundle.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 namespace Kreait\EzPublish\MigrationsBundle\Tests\Command;
 
-use Kreait\EzPublish\MigrationsBundle\Command\LatestCommand;
+use Kreait\EzPublish\MigrationsBundle\Command\ExecuteCommand;
 use Kreait\EzPublish\MigrationsBundle\Tests\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @group commands
  */
-class LatestCommandTest extends TestCase
+class ExecuteCommandTest extends TestCase
 {
-    /**
-     * @ runInSeparateProcess
-     */
     public function testExecute()
     {
         $versionString = $this->generateMigrationAndReturnVersionString();
 
-        $command = new LatestCommand();
+        $command = new ExecuteCommand();
         $this->application->add($command);
 
         $tester = new CommandTester($command);
         $tester->execute(
             [
                 'command' => $command->getName(),
+                'version' => $versionString,
+                '--no-interaction' => true,
+            ],
+            [
+                'interactive' => false,
             ]
         );
 
-        $this->assertEquals($versionString, $this->getVersionFromString($tester->getDisplay()));
+        $output = $tester->getDisplay();
+
+        $this->assertRegExp('/\+\+ migrated/', $output);
     }
 }

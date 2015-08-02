@@ -7,12 +7,6 @@
  * with this source code in the file LICENSE.
  */
 
-/**
- * This file is part of the kreait eZ Publish Migrations Bundle.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 namespace Kreait\EzPublish\MigrationsBundle\Tests;
 
 use Doctrine\DBAL\DriverManager;
@@ -185,8 +179,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
     /**
      * @throws \Doctrine\DBAL\DBALException
-     * @return \Doctrine\DBAL\Connection
      *
+     * @return \Doctrine\DBAL\Connection
      */
     public function getSqliteConnection()
     {
@@ -303,17 +297,17 @@ class TestCase extends \PHPUnit_Framework_TestCase
      * @param string $string
      *
      * @throws \RuntimeException
-     * @return string
      *
+     * @return string
      */
     protected function getVersionFromString($string)
     {
-        if (preg_match('/(Version)(\d+)(.php)?/', $string, $matches)) {
+        if (preg_match('/(Version)(\d+)(.php)?/m', $string, $matches)) {
             return $matches[2];
         }
 
-        if (preg_match('/^\d+$/', $string)) {
-            return trim($string);
+        if (preg_match('/^\d+$/m', $string, $matches)) {
+            return $matches[0];
         }
 
         throw new \RuntimeException("Couldn't find version in string. Please check your tests.");

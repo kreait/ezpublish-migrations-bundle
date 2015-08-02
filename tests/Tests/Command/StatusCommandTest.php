@@ -7,12 +7,6 @@
  * with this source code in the file LICENSE.
  */
 
-/**
- * This file is part of the kreait eZ Publish Migrations Bundle.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 namespace Kreait\EzPublish\MigrationsBundle\Tests\Command;
 
 use Kreait\EzPublish\MigrationsBundle\Command\StatusCommand;
@@ -31,7 +25,7 @@ class StatusCommandTest extends TestCase
     public function testExecute($numberOfVersions)
     {
         $versions = [];
-        for ($i = 0; $i < $numberOfVersions; $i++) {
+        for ($i = 0; $i < $numberOfVersions; ++$i) {
             $versions[] = $this->generateMigrationAndReturnVersionString();
             if ($numberOfVersions > 1) {
                 sleep(1); // We have to wait for one second to get a new version :)
