@@ -7,9 +7,6 @@
  * with this source code in the file LICENSE.
  */
 
-/**
- * This file is part of the kreait eZ Publish Migrations Bundle.
- */
 namespace Kreait\EzPublish\MigrationsBundle;
 
 use Kreait\EzPublish\MigrationsBundle\DependencyInjection\EzPublishMigrationsExtension;
