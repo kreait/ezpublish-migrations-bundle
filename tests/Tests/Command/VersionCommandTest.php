@@ -32,11 +32,14 @@ class VersionCommandTest extends TestCase
                 'version' => $versionString,
                 '--add' => true,
                 '--no-interaction' => true,
+            ],
+            [
+                'interactive' => false,
             ]
         );
 
         $output = $tester->getDisplay();
 
-        $this->assertEmpty($output);
+        $this->assertNotEmpty($output);
     }
 }
