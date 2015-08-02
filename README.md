@@ -55,7 +55,7 @@ The examples below are the default values.
 ```
 // ezpublish/config/config.yml
 ezpublish_migrations:
-    dir_name: %kernel.root_dir%/EzPublishMigrations
+    dir_name: "%kernel.root_dir%/EzPublishMigrations"
     namespace: Application\Migrations
     table_name: ezmigration_versions
     name: Application Migrations
