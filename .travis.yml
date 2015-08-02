@@ -2,14 +2,12 @@ language: php
 
 sudo: false
 
-before_install: composer self-update
-
-install: composer update
-
 php:
   - 5.4
   - 5.5
   - 5.6
+  - 7.0
+  - hhvm
 
 cache:
   directories:
@@ -19,8 +17,20 @@ env:
   global:
     - TIMEZONE="Europe/Berlin"
 
+matrix:
+  fast_finish: true
+  include:
+    - php: 5.4
+      env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
+
+before_install: composer self-update
+
+install:
+  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction
+
 before_script:
-  - echo 'date.timezone = "Europe/Berlin"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - if [ "$TRAVIS_PHP_VERSION" = "hhv*" ]; then cat tests/fixtures/travis.ini >> /etc/hhvm/php.ini; fi;
+  - if [ "$TRAVIS_PHP_VERSION" = "php*" ]; then phpenv config-add tests/fixtures/travis.ini ; fi;
 
 script: vendor/bin/phpunit --coverage-clover=coverage.clover
 
@@ -34,6 +44,4 @@ notifications:
   webhooks:
     urls:
       - https://webhooks.gitter.im/e/81fafa2c4f2eb03e552e
-    on_success: change
-    on_failure: always
-    on_start: false
+
