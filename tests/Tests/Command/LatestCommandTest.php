@@ -13,37 +13,35 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Kreait\EzPublish\MigrationsBundle\Tests\Command;
 
-use Kreait\EzPublish\MigrationsBundle\Command\MigrateCommand;
+use Kreait\EzPublish\MigrationsBundle\Command\LatestCommand;
 use Kreait\EzPublish\MigrationsBundle\Tests\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @group commands
  */
-class MigrateCommandTest extends TestCase
+class LatestCommandTest extends TestCase
 {
-    public function testExecuteAddVersion()
+    /**
+     * @ runInSeparateProcess
+     */
+    public function testExecute()
     {
-        $this->generateMigrationAndReturnVersionString();
+        $versionString = $this->generateMigrationAndReturnVersionString();
 
-        $command = new MigrateCommand();
+        $command = new LatestCommand();
         $this->application->add($command);
 
         $tester = new CommandTester($command);
         $tester->execute(
             [
                 'command' => $command->getName(),
-                '--no-interaction' => true,
-            ],
-            [
-                'interactive' => false,
             ]
         );
 
-        $output = $tester->getDisplay();
-
-        $this->assertRegExp('/1 migrations executed/', $output);
+        $this->assertEquals($versionString, $this->getVersionFromString($tester->getDisplay()));
     }
 }

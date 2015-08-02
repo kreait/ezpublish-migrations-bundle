@@ -15,3 +15,4 @@
  */
 $loader = require __DIR__.'/../vendor/autoload.php';
 $loader->add('Doctrine\DBAL\Migrations\Tests', __DIR__.'/../vendor/doctrine/migrations/tests');
+$loader->addPsr4('Kreait\\EzPublish\\MigrationsBundle\\Tests\\', __DIR__.'/Tests');
