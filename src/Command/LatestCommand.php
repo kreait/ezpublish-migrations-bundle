@@ -22,9 +22,6 @@ class LatestCommand extends BaseLatestCommand
 {
     use CommandTrait;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function configure()
     {
         parent::configure();
@@ -32,9 +29,6 @@ class LatestCommand extends BaseLatestCommand
         $this->setName('ezpublish:migrations:latest');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var \Symfony\Bundle\FrameworkBundle\Console\Application $app */

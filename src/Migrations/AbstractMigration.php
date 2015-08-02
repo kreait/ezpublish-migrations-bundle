@@ -63,18 +63,12 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
         $this->setDefaultMigrationUser();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function preUp(Schema $schema)
     {
         parent::preUp($schema);
         $this->pre($schema);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function preDown(Schema $schema)
     {
         parent::preDown($schema);

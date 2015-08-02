@@ -22,9 +22,6 @@ class ExecuteCommand extends BaseExecuteCommand
 {
     use CommandTrait;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function configure()
     {
         parent::configure();
@@ -32,9 +29,6 @@ class ExecuteCommand extends BaseExecuteCommand
         $this->setName('ezpublish:migrations:execute');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var \Symfony\Bundle\FrameworkBundle\Console\Application $app */

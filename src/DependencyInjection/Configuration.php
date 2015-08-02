@@ -32,9 +32,6 @@ class Configuration implements ConfigurationInterface
         $this->rootIdentifier = $rootIdentifier;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();

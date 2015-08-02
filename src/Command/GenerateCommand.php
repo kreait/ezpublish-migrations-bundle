@@ -58,9 +58,7 @@ class Version<version> extends EzPublishMigration
     }
 }
 ';
-    /**
-     * {@inheritDoc}
-     */
+
     protected function configure()
     {
         parent::configure();
@@ -68,9 +66,6 @@ class Version<version> extends EzPublishMigration
         $this->setName('ezpublish:migrations:generate');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var \Symfony\Bundle\FrameworkBundle\Console\Application $app */
@@ -86,9 +81,6 @@ class Version<version> extends EzPublishMigration
         parent::execute($input, $output);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateMigration(Configuration $configuration, InputInterface $input, $version, $up = null, $down = null)
     {
         $placeHolders = [

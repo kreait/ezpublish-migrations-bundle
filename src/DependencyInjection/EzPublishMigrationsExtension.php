@@ -19,9 +19,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class EzPublishMigrationsExtension extends Extension
 {
-    /**
-     * {@inheritDoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration($this->getAlias());
@@ -32,9 +29,6 @@ class EzPublishMigrationsExtension extends Extension
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getAlias()
     {
         return 'ezpublish_migrations';

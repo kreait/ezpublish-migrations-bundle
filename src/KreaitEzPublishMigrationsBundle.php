@@ -14,9 +14,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class KreaitEzPublishMigrationsBundle extends Bundle
 {
-    /**
-     * {@inheritDoc}
-     */
     public function getContainerExtension()
     {
         return new EzPublishMigrationsExtension();
