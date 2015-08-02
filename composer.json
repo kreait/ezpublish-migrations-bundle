@@ -12,13 +12,13 @@
         "doctrine/migrations": "^1.0"
     },
     "require-dev": {
-        "symfony/config": "^2.3",
-        "symfony/console": "^2.3",
-        "symfony/dependency-injection": "^2.3",
-        "symfony/framework-bundle": "^2.3",
-        "symfony/finder": "^2.3",
-        "symfony/http-kernel": "^2.3",
-        "symfony/expression-language": "^2.3",
+        "symfony/config": "^2.4",
+        "symfony/console": "^2.4",
+        "symfony/dependency-injection": "^2.4",
+        "symfony/framework-bundle": "^2.4",
+        "symfony/finder": "^2.4",
+        "symfony/http-kernel": "^2.4",
+        "symfony/expression-language": "^2.4",
         "ezsystems/ezpublish-api": ">=2014.11",
         "ezsystems/ezpublish-spi": ">=2014.11",
         "phpunit/phpunit": "^4.5"
