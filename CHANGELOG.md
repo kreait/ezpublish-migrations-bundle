@@ -3,6 +3,12 @@
 ## Unreleased
 
 - Removed Mockery as a dependency
+- Updated doctrine/migrations to Version 1.0 (stable)
+- Bumped minimum version requirement for the Symfony Components to 2.4
+  - The previous minimum requirement of 2.3 was an error in the first place, because some used components
+    were not available until 2.4
+- Test library with `--prefer-stable --prefer-lowest`
+- Ensure PHP 7.0 and HHVM support in Travis CI tests
 
 ## 1.3 - 2015-06-10
 
