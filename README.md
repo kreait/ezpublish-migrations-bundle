@@ -13,28 +13,14 @@ Migrations for eZ Publish 5, based on [Doctrine Migrations](https://github.com/d
 
 ## Installation
 
-Follow these steps to install the bundle in your eZ Publish 5 project.
-
-Add the following to your composer.json file:
-
-```
-{
-    "require": {
-        "doctrine/migrations": "1.0.0-alpha3",
-        "kreait/ezpublish-migrations-bundle": "~1.0"
-    }
-}
-```
-
-Update the vendor libraries:
-
 ```bash
-$ php composer.phar update
+composer require kreait/ezpublish-migrations-bundle
 ```
 
-If everything worked, the EzPublishMigrationsBundle can now be found at vendor/kreait/ezpublish-migrations-bundle.
+## Configuration
 
-Finally, be sure to enable the bundle in EzPublishKernel.php by including the following:
+
+Enable the bundle in EzPublishKernel.php by including the following:
 
 ```php
 // ezpublish/EzPublishKernel.php
@@ -46,8 +32,6 @@ public function registerBundles()
     );
 }
 ```
-
-## Configuration
 
 You can configure the path, namespace, table_name and name in your config.yml.
 The examples below are the default values.
