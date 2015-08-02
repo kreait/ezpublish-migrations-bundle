@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 2.0 - 2015-08-03
 
 - Removed Mockery as a dependency
 - Updated doctrine/migrations to Version 1.0 (stable)
