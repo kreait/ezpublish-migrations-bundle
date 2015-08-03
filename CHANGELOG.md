@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 2.0.1 - 2015-08-03
 
 - Updated .gitattributes to exclude all test related files
 - Updated README
