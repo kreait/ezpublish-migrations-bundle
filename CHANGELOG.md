@@ -1,11 +1,14 @@
 # CHANGELOG
 
+## 2.0.2 - 2015-08-03
+
+- Muted `Migration xxx was executed but did not result in any SQL statements.` messages.
+- Removed hacky instructions to output status information, because this causes the migrations to fail.
+
 ## 2.0.1 - 2015-08-03
 
 - Updated .gitattributes to exclude all test related files
 - Updated README
-- Muted `Migration xxx was executed but did not result in any SQL statements.` messages.
-- Removed hacky instructions to output status information, because this causes the migrations to fail.
 
 ## 2.0 - 2015-08-03
 
