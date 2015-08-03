@@ -1,10 +1,11 @@
 # eZ Publish 5 Migrations
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/kreait/ezpublish-migrations-bundle.svg?style=flat-square)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
-[![Build Status](https://img.shields.io/travis/kreait/ezpublish-migrations-bundle.svg?style=flat-square)](http://travis-ci.org/kreait/ezpublish-migrations-bundle)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/kreait/ezpublish-migrations-bundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/?branch=master)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/kreait/ezpublish-migrations-bundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/?branch=master)
-[![License](http://img.shields.io/badge/Licence-MIT-brightgreen.svg?style=flat-square)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
+[![Latest Stable Version](https://img.shields.io/packagist/v/kreait/ezpublish-migrations-bundle.svg)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
+[![License](http://img.shields.io/badge/Licence-MIT-blue.svg)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
+[![Build Status](https://img.shields.io/travis/kreait/ezpublish-migrations-bundle.svg)](http://travis-ci.org/kreait/ezpublish-migrations-bundle)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/kreait/ezpublish-migrations-bundle.svg)](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/?branch=master)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/kreait/ezpublish-migrations-bundle.svg)](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/?branch=master)
+[![Gitter](https://img.shields.io/badge/gitter-join%20chat-ff69b4.svg)](https://gitter.im/kreait/ezpublish-migrations-bundle)
 
 Migrations for eZ Publish 5, based on [Doctrine Migrations](https://github.com/doctrine/migrations), very similar to Symfony's
 [DoctrineMigrationsBundle](https://github.com/doctrine/DoctrineMigrationsBundle).
