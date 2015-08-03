@@ -63,7 +63,10 @@ trait CommandTrait
         $outputWriter = new OutputWriter(
             function ($message) use ($output) {
                 // @codeCoverageIgnoreStart
-                return $output->writeln($message);
+                if (!(stripos($message, 'but did not result in any sql statements') !== false)) {
+                    return $output->writeln($message);
+                }
+                return null;
                 // @codeCoverageIgnoreEnd
             }
         );
