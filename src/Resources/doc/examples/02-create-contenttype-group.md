@@ -43,8 +43,6 @@ class Version20140508144959 extends EzPublishMigration
         $contentTypeService->createContentTypeGroup(
             $contentTypeService->newContentTypeGroupCreateStruct($this->groupName)
         );
-
-        $this->addSql(sprintf("SELECT \"Created new ContentType group '%s'\"", $this->groupName));
     }
 
     /**
@@ -52,7 +50,7 @@ class Version20140508144959 extends EzPublishMigration
      */
     public function down(Schema $schema)
     {
-        $this->addSql("SELECT \"We don't delete existing ContentType groups so that we don't break things.\"");
+        // We don't delete existing ContentType groups so that we don't break things
     }
 }
 ```

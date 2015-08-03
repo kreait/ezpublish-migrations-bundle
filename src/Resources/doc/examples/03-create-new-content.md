@@ -27,8 +27,6 @@ class Version20150610145137 extends EzPublishMigration
             'name' => 'This is a new folder',
             'short_name' => 'New folder'
         ]);
-
-        $this->addSql(sprintf("SELECT \"Created new Folder '%s'\"", 'New folder'));
     }
 
     /**
@@ -36,7 +34,7 @@ class Version20150610145137 extends EzPublishMigration
      */
     public function down(Schema $schema)
     {
-
+        // We probably should somehow delete the content again.
     }
 }
 

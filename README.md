@@ -83,27 +83,6 @@ $this->restoreDefaultMigrationUser();
 
 See [src/Resources/doc/examples](src/Resources/doc/examples) for some usage examples.
 
-## Caveats
-
-### No "real" SQL statements
-
-When you create a migration using only eZ Publish's API methods, no actual SQL statements are executed. This results in the following message:
-
-```
-Migration was executed but did not result in any SQL statements.
-```
-
-You can avoid this message by adding a dummy SQL statement at the end of your `up()` and `down()` method:
-
-```php
-public function up(Schema $schema)
-{
-    // ...
-    $this->addSql("SELECT 'Description of what we did here'");
-}
-```
-
-
 ## Acknowledgments
 
 - [Doctrine Project](http://www.doctrine-project.org/) for the [Doctrine Database Migrations](https://github.com/doctrine/migrations) providing the underlying migration functionality

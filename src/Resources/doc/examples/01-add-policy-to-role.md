@@ -45,7 +45,7 @@ class Version20140507140029 extends EzPublishMigration
      */
     public function down(Schema $schema)
     {
-        $this->addSql("SELECT 'We should probably remove access to {$this->siteAccessIdentifier} here'");
+        // We should probably remove access to {$this->siteAccessIdentifier} here
     }
 
     /**
@@ -64,9 +64,6 @@ class Version20140507140029 extends EzPublishMigration
         $policy->addLimitation($limitation);
 
         $roleService->addPolicy($role, $policy);
-
-        $message = sprintf("SELECT 'Added SiteAccess limitation for \"%s\" to role \"%s\"'", $siteAccessName, $role->identifier);
-        $this->addSql($message);
     }
 }
 ```
