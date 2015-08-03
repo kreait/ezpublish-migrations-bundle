@@ -4,6 +4,8 @@
 
 - Updated .gitattributes to exclude all test related files
 - Updated README
+- Muted `Migration xxx was executed but did not result in any SQL statements.` messages.
+- Removed hacky instructions to output status information, because this causes the migrations to fail.
 
 ## 2.0 - 2015-08-03
 
@@ -14,6 +16,8 @@
     were not available until 2.4
 - Test library with `--prefer-stable --prefer-lowest`
 - Ensure PHP 7.0 and HHVM support in Travis CI tests
+- When migrating from 1.x to 2.x, you have to remove all `$this->addSql("SELECT '...'");` statements, because
+  those will result in an `Cannot execute queries while other unbuffered queries are active.` error.
 
 ## 1.3 - 2015-06-10
 
