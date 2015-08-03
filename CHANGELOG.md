@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Unreleased
+
+- Updated .gitattributes to exclude all test related files
+- Updated README
+
 ## 2.0 - 2015-08-03
 
 - Removed Mockery as a dependency
