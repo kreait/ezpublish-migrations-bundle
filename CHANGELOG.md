@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+- Added support for Symfony 3 and PHPUnit 5
+
 ## 2.0.2 - 2015-08-03
 
 - Muted `Migration xxx was executed but did not result in any SQL statements.` messages.
