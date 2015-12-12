@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 2.0.3 - 2015-12-13
 
 - Added support for Symfony 3 and PHPUnit 5
 
