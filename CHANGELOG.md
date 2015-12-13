@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 3.0 - 2015-12-13
 
 - This bundle is now based on the [DoctrineMigrationsBundle](https://github.com/doctrine/DoctrineMigrationsBundle) and
   eZ Platform ready.
