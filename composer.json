@@ -19,8 +19,8 @@
         "symfony/finder": "^2.4|^3.0",
         "symfony/http-kernel": "^2.4|^3.0",
         "symfony/expression-language": "^2.4|^3.0",
-        "ezsystems/ezpublish-api": ">=2014.11",
-        "ezsystems/ezpublish-spi": ">=2014.11",
+        "ezsystems/ezpublish-api": "^5.3|^6.0",
+        "ezsystems/ezpublish-spi": "^5.3|^6.0",
         "phpunit/phpunit": "^4.5|^5.0"
     },
     "autoload": {
