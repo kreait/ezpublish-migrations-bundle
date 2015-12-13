@@ -30,13 +30,6 @@ abstract class EzPublishMigration extends AbstractMigration implements Container
     private $defaultMigrationUser;
 
     /**
-     * The username of the current migration user.
-     *
-     * @var string
-     */
-    private $currentMigrationUser;
-
-    /**
      * @var \eZ\Publish\API\Repository\Repository
      */
     protected $repository;
@@ -49,7 +42,6 @@ abstract class EzPublishMigration extends AbstractMigration implements Container
         $this->repository = $this->container->get('ezpublish.api.repository');
 
         $this->defaultMigrationUser = $this->container->getParameter('ezpublish_migrations.ez_migrations_user');
-        $this->currentMigrationUser = $this->defaultMigrationUser;
 
         $this->setDefaultMigrationUser();
     }
