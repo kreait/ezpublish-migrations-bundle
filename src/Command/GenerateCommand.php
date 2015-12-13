@@ -10,9 +10,9 @@
 namespace Kreait\EzPublish\MigrationsBundle\Command;
 
 use Doctrine\Bundle\MigrationsBundle\Command\MigrationsGenerateDoctrineCommand;
-use Symfony\Component\Console\Input\InputInterface;
 use Doctrine\DBAL\Migrations\Configuration\Configuration;
 use Doctrine\DBAL\Migrations\Tools\Console\Helper\MigrationDirectoryHelper;
+use Symfony\Component\Console\Input\InputInterface;
 
 /**
  * Command for generating new blank migration classes.
@@ -74,19 +74,19 @@ class Version<version> extends EzPublishMigration
         $replacements = [
             $configuration->getMigrationsNamespace(),
             $version,
-            $up ? "        " . implode("\n        ", explode("\n", $up)) : null,
-            $down ? "        " . implode("\n        ", explode("\n", $down)) : null
+            $up ? '        '.implode("\n        ", explode("\n", $up)) : null,
+            $down ? '        '.implode("\n        ", explode("\n", $down)) : null,
         ];
         $code = str_replace($placeHolders, $replacements, $this->ezMigrationTemplate);
         $code = preg_replace('/^ +$/m', '', $code);
         $migrationDirectoryHelper = new MigrationDirectoryHelper($configuration);
         $dir = $migrationDirectoryHelper->getMigrationDirectory();
-        $path = $dir . '/Version' . $version . '.php';
+        $path = $dir.'/Version'.$version.'.php';
 
         file_put_contents($path, $code);
 
         if ($editorCmd = $input->getOption('editor-cmd')) {
-            proc_open($editorCmd . ' ' . escapeshellarg($path), [], $pipes);
+            proc_open($editorCmd.' '.escapeshellarg($path), [], $pipes);
         }
 
         return $path;
