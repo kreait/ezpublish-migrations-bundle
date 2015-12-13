@@ -1,31 +1,31 @@
 {
     "name": "kreait/ezpublish-migrations-bundle",
-    "description": "Migrations for eZ Publish 5",
-    "keywords": ["migrations", "ezpublish"],
+    "description": "Migrations for eZ Publish/eZ Platform",
+    "keywords": ["migrations", "ezpublish", "ezplatform", "ezpublish"],
     "homepage": "https://github.com/kreait/ezpublish-migrations-bundle",
     "license": "MIT",
     "authors": [
-        {"name": "Jérôme Gamez", "email": "jerome@kreait.com"}
+        {
+            "name": "Jérôme Gamez",
+            "email": "jerome@gamez.name",
+            "homepage": "https://github.com/jeromegamez"
+        }
     ],
     "require": {
-        "php": ">=5.4",
-        "doctrine/migrations": "^1.0"
+        "doctrine/doctrine-migrations-bundle": "^1.1"
     },
     "require-dev": {
-        "symfony/config": "^2.4|^3.0",
-        "symfony/console": "^2.4|^3.0",
-        "symfony/dependency-injection": "^2.4|^3.0",
-        "symfony/framework-bundle": "^2.4|^3.0",
-        "symfony/finder": "^2.4|^3.0",
-        "symfony/http-kernel": "^2.4|^3.0",
-        "symfony/expression-language": "^2.4|^3.0",
         "ezsystems/ezpublish-api": "^5.3|^6.0",
-        "ezsystems/ezpublish-spi": "^5.3|^6.0",
-        "phpunit/phpunit": "^4.5|^5.0"
+        "ezsystems/ezpublish-spi": "^5.3|^6.0"
     },
     "autoload": {
         "psr-4": {
             "Kreait\\EzPublish\\MigrationsBundle\\": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0-dev"
         }
     }
 }

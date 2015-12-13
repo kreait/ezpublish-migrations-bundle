@@ -9,7 +9,7 @@
 
 namespace Kreait\EzPublish\MigrationsBundle\Migrations;
 
-use Doctrine\DBAL\Migrations\AbstractMigration as BaseAbstractMigration;
+use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 use eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException;
 use eZ\Publish\API\Repository\Exceptions\ContentValidationException;
@@ -17,9 +17,8 @@ use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-abstract class AbstractMigration extends BaseAbstractMigration implements ContainerAwareInterface
+abstract class EzPublishMigration extends AbstractMigration implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
@@ -43,21 +42,13 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     protected $repository;
 
     /**
-     * @var \eZ\Publish\API\Repository\UserService
-     */
-    private $userService;
-
-    /**
      * Initializes eZ Publish related service shortcuts.
-     *
-     * @param Schema $schema
      */
-    protected function pre(Schema $schema)
+    protected function pre()
     {
         $this->repository = $this->container->get('ezpublish.api.repository');
-        $this->userService = $this->repository->getUserService();
 
-        $this->defaultMigrationUser = $this->container->getParameter('ezpublish_migrations.ez_user');
+        $this->defaultMigrationUser = $this->container->getParameter('ezpublish_migrations.ez_migrations_user');
         $this->currentMigrationUser = $this->defaultMigrationUser;
 
         $this->setDefaultMigrationUser();
@@ -66,13 +57,13 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     public function preUp(Schema $schema)
     {
         parent::preUp($schema);
-        $this->pre($schema);
+        $this->pre();
     }
 
     public function preDown(Schema $schema)
     {
         parent::preDown($schema);
-        $this->pre($schema);
+        $this->pre();
     }
 
     /**
@@ -94,19 +85,6 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     }
 
     /**
-     * Returns the container.
-     *
-     * @deprecated 1.0.1 Use <code>$this->container</code> instead
-     * @codeCoverageIgnore
-     *
-     * @return ContainerInterface
-     */
-    protected function getContainer()
-    {
-        return $this->container;
-    }
-
-    /**
      * Sets the current ez user the the default migration user.
      */
     private function setDefaultMigrationUser()
@@ -122,7 +100,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     private function setMigrationUser($username)
     {
         $this->repository->setCurrentUser(
-            $this->userService->loadUserByLogin($username)
+            $this->repository->getUserService()->loadUserByLogin($username)
         );
     }
 
@@ -151,11 +129,9 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
      */
     protected function createContent($parentLocationId, $contentTypeIdentifier, $languageCode, array $fields)
     {
-        /** @var $repository \eZ\Publish\API\Repository\Repository */
-        $repository = $this->container->get('ezpublish.api.repository');
-        $contentService = $repository->getContentService();
-        $locationService = $repository->getLocationService();
-        $contentTypeService = $repository->getContentTypeService();
+        $contentService = $this->repository->getContentService();
+        $locationService = $this->repository->getLocationService();
+        $contentTypeService = $this->repository->getContentTypeService();
 
         $contentType = $contentTypeService->loadContentTypeByIdentifier($contentTypeIdentifier);
         $contentCreateStruct = $contentService->newContentCreateStruct($contentType, $languageCode);

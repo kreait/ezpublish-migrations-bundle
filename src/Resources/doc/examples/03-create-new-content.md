@@ -2,18 +2,10 @@
 
 ##### Create new content
 
-```bash
-$ ezpublish/console ezpublish:migrations:generate
-Generated new migration class to "/var/www/ezpublish/EzPublishMigrations/Version20150610145137.php"
-```
-
 ```php
-
-// ezpublish/EzPublishMigrations/Version20150610145137.php
-<?php
 namespace Application\Migrations;
 
-use Kreait\EzPublish\MigrationsBundle\Migrations\AbstractMigration as EzPublishMigration;
+use Kreait\EzPublish\MigrationsBundle\Migrations\EzPublishMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 class Version20150610145137 extends EzPublishMigration

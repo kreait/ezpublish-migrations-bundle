@@ -2,18 +2,10 @@
 
 ##### Create a ContentType group
 
-```bash
-$ ezpublish/console ezpublish:migrations:generate
-Generated new migration class to "/var/www/ezpublish/EzPublishMigrations/Version20140508144959.php"
-```
-
 ```php
-// ezpublish/EzPublishMigrations/Version20140508144959.php
-<?php
-
 namespace Application\Migrations;
 
-use Kreait\EzPublish\MigrationsBundle\Migrations\AbstractMigration as EzPublishMigration;
+use Kreait\EzPublish\MigrationsBundle\Migrations\EzPublishMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**

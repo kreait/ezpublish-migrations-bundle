@@ -2,19 +2,13 @@
 
 ##### Enable users with the 'Anonymous' role to access the siteacess 'mysiteaccess' without having to log in
 
-```bash
-$ ezpublish/console ezpublish:migrations:generate
-Generated new migration class to "/var/www/ezpublish/EzPublishMigrations/Version20140507140029.php"
-```
-
 ```php
-// ezpublish/EzPublishMigrations/Version20140507140029.php
 namespace Application\Migrations;
 
 use eZ\Publish\API\Repository\RoleService;
 use eZ\Publish\API\Repository\Values\User\Limitation\SiteAccessLimitation;
 use eZ\Publish\API\Repository\Values\User\Role;
-use Kreait\EzPublish\MigrationsBundle\Migrations\AbstractMigration as EzPublishMigration;
+use Kreait\EzPublish\MigrationsBundle\Migrations\EzPublishMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
@@ -25,7 +19,7 @@ class Version20140507140029 extends EzPublishMigration
     /**
      * @var string
      */
-    private $siteAccessIdentifier = 'mysiteaccess';
+    private $siteAccessIdentifier = 'site';
 
     /**
      * @param Schema $schema

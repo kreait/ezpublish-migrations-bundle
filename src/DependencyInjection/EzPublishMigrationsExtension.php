@@ -33,4 +33,9 @@ class EzPublishMigrationsExtension extends Extension
     {
         return 'ezpublish_migrations';
     }
+
+    public function getConfiguration(array $config, ContainerBuilder $container)
+    {
+        return new Configuration($this->getAlias());
+    }
 }

@@ -9,25 +9,21 @@
 
 namespace Kreait\EzPublish\MigrationsBundle\Command;
 
-use Doctrine\DBAL\Migrations\Configuration\Configuration;
-use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand as BaseGenerateCommand;
-use Kreait\EzPublish\MigrationsBundle\Traits\CommandTrait;
+use Doctrine\Bundle\MigrationsBundle\Command\MigrationsGenerateDoctrineCommand;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\DBAL\Migrations\Configuration\Configuration;
+use Doctrine\DBAL\Migrations\Tools\Console\Helper\MigrationDirectoryHelper;
 
 /**
  * Command for generating new blank migration classes.
  */
-class GenerateCommand extends BaseGenerateCommand
+class GenerateCommand extends MigrationsGenerateDoctrineCommand
 {
-    use CommandTrait;
-
-    protected $template =
+    protected $ezMigrationTemplate =
             '<?php
 namespace <namespace>;
 
-use Kreait\EzPublish\MigrationsBundle\Migrations\AbstractMigration as EzPublishMigration;
+use Kreait\EzPublish\MigrationsBundle\Migrations\EzPublishMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
@@ -64,21 +60,7 @@ class Version<version> extends EzPublishMigration
         parent::configure();
 
         $this->setName('ezpublish:migrations:generate');
-    }
-
-    public function execute(InputInterface $input, OutputInterface $output)
-    {
-        /** @var \Symfony\Bundle\FrameworkBundle\Console\Application $app */
-        $app = $this->getApplication();
-        /** @var ContainerInterface $container */
-        $container = $app->getKernel()->getContainer();
-
-        $this->setMigrationConfiguration($this->getBasicConfiguration($container, $output));
-
-        $configuration = $this->getMigrationConfiguration($input, $output);
-        $this->configureMigrations($container, $configuration);
-
-        parent::execute($input, $output);
+        $this->setDescription('Generate a blank eZ Publish/Platform enabled migration class');
     }
 
     protected function generateMigration(Configuration $configuration, InputInterface $input, $version, $up = null, $down = null)
@@ -92,25 +74,19 @@ class Version<version> extends EzPublishMigration
         $replacements = [
             $configuration->getMigrationsNamespace(),
             $version,
-            $up ? '        '.implode("\n        ", explode("\n", $up)) : null,
-            $down ? '        '.implode("\n        ", explode("\n", $down)) : null,
+            $up ? "        " . implode("\n        ", explode("\n", $up)) : null,
+            $down ? "        " . implode("\n        ", explode("\n", $down)) : null
         ];
-        $code = str_replace($placeHolders, $replacements, $this->template);
-        $dir = $configuration->getMigrationsDirectory();
-        $dir = $dir ? $dir : getcwd();
-        $dir = rtrim($dir, '/');
-        $path = $dir.'/Version'.$version.'.php';
-
-        if (!file_exists($dir)) {
-            // @codeCoverageIgnoreStart
-            throw new \InvalidArgumentException(sprintf('Migrations directory "%s" does not exist.', $dir));
-            // @codeCoverageIgnoreEnd
-        }
+        $code = str_replace($placeHolders, $replacements, $this->ezMigrationTemplate);
+        $code = preg_replace('/^ +$/m', '', $code);
+        $migrationDirectoryHelper = new MigrationDirectoryHelper($configuration);
+        $dir = $migrationDirectoryHelper->getMigrationDirectory();
+        $path = $dir . '/Version' . $version . '.php';
 
         file_put_contents($path, $code);
 
         if ($editorCmd = $input->getOption('editor-cmd')) {
-            shell_exec($editorCmd.' '.escapeshellarg($path));
+            proc_open($editorCmd . ' ' . escapeshellarg($path), [], $pipes);
         }
 
         return $path;

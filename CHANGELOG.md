@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## Unreleased
+
+- This bundle is now based on the [DoctrineMigrationsBundle](https://github.com/doctrine/DoctrineMigrationsBundle) and
+  eZ Platform ready.
+- All commands except the `ezpublish:migrations:generate` have been removed -
+  use the `doctrine:migrations:*` commands instead
+- The following deprecated methods have been removed:
+  - `Kreait\EzPublish\MigrationsBundle\Migrations\AbstractMigration::getContainer()`
+- If you want to upgrade an existing project using version 1.x/2.x to the latest release, please follow the
+  [upgrade guide](UPGRADE.md)
+
 ## 2.0.3 - 2015-12-13
 
 - Added support for Symfony 3 and PHPUnit 5

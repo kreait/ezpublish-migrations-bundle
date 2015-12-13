@@ -1,16 +1,19 @@
-# eZ Publish 5 Migrations
+# eZ Publish/Platform Migrations
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/kreait/ezpublish-migrations-bundle.svg)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
 [![License](http://img.shields.io/badge/Licence-MIT-blue.svg)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
-[![Build Status](https://img.shields.io/travis/kreait/ezpublish-migrations-bundle.svg)](http://travis-ci.org/kreait/ezpublish-migrations-bundle)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/kreait/ezpublish-migrations-bundle.svg)](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/?branch=master)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/kreait/ezpublish-migrations-bundle.svg)](https://scrutinizer-ci.com/g/kreait/ezpublish-migrations-bundle/?branch=master)
 [![Gitter](https://img.shields.io/badge/gitter-join%20chat-ff69b4.svg)](https://gitter.im/kreait/ezpublish-migrations-bundle)
 
-Migrations for eZ Publish 5, based on [Doctrine Migrations](https://github.com/doctrine/migrations), very similar to Symfony's
-[DoctrineMigrationsBundle](https://github.com/doctrine/DoctrineMigrationsBundle).
+Migrations for eZ Publish/Platform.
 
+## Features
 
+This bundle gives you an additional `ezpublish:migrations:generate` command, which generates a Migration that eases
+eZ Publish/Platform related changes
+
+- Automatically sets the active eZ user performing the changes (default: `admin`)
+- Allows the quick change of the currently active user, e.g. for creating new content in the name of a certain user.
+- Adds a shorthand method to create new content
 
 ## Installation
 
@@ -18,52 +21,44 @@ Migrations for eZ Publish 5, based on [Doctrine Migrations](https://github.com/d
 composer require kreait/ezpublish-migrations-bundle
 ```
 
-## Configuration
-
-
-Enable the bundle in EzPublishKernel.php by including the following:
+Enable the DoctrineMigrationsBundle and the KreaitEzPublishMigrationsBundle
+in `AppKernel.php` (eZ Platform) or `EzPublishKernel.php` (eZ Publish 5):
 
 ```php
-// ezpublish/EzPublishKernel.php
 public function registerBundles()
 {
     $bundles = array(
         //...
+        new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
         new Kreait\EzPublish\MigrationsBundle\KreaitEzPublishMigrationsBundle(),
     );
 }
 ```
 
-You can configure the path, namespace, table_name and name in your config.yml.
-The examples below are the default values.
+### Configuration
+
+You can configure the bundles in your `config.yml`. The examples below are the default values.
 
 ```
-// ezpublish/config/config.yml
-ezpublish_migrations:
-    dir_name: "%kernel.root_dir%/EzPublishMigrations"
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
     namespace: Application\Migrations
-    table_name: ezmigration_versions
+    table_name: migration_versions
     name: Application Migrations
-    ez_user: admin
+
+ezpublish_migrations:
+    # The login name of the user performing the migrations.
+    ez_migrations_user: admin
 ```
 
 ## Usage
 
-All of the migrations functionality is contained in the following commands:
+The usage is [identical to Symfony's DoctrineMigrationBundle](http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html),
+with the addition of the following command:
 
 ```
-ezpublish:migrations
-  :execute  Execute a single migration version up or down manually.
-  :generate Generate a blank migration class.
-  :migrate  Execute a migration to a specified version or the latest available version.
-  :status   View the status of a set of migrations.
-  :version  Manually add and delete migration versions from the version table.
+ezpublish:migrations:generate # Generate a blank eZ Publish/Platform enabled migration class
 ```
-
-The usage is identical to Symfony's DoctrineMigrationBundle, except for the missing `:diff` command.
-Please have a look at the
-[official documentation](http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html)
-for further information.
 
 ### Changing the current migration user during a migration
 
@@ -79,12 +74,13 @@ and restore the default Migration user by using:
 $this->restoreDefaultMigrationUser();
 ```
 
-## Usage examples
+See [src/Resources/doc/examples](src/Resources/doc/examples) for more usage examples.
 
-See [src/Resources/doc/examples](src/Resources/doc/examples) for some usage examples.
+## Known issues
 
-## Acknowledgments
+When you create a migration using only eZ Publish's API methods, no SQL statements are executed in terms of the
+DoctrineMigrationsBundle. This results in the following message:
 
-- [Doctrine Project](http://www.doctrine-project.org/) for the [Doctrine Database Migrations](https://github.com/doctrine/migrations) providing the underlying migration functionality
-- [Symfony](http://symfony.com/) for the [DoctrineMigrationsBundle](https://github.com/doctrine/DoctrineMigrationsBundle) being the blueprint for this bundle
-- [Magic Internet GmbH](http://www.magicinternet.de/), especially [@m-keil](https://github.com/m-keil) for the initial methodical blueprint
+```
+Migration was executed but did not result in any SQL statements.
+```

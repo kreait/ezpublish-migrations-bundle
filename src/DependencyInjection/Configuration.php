@@ -39,11 +39,11 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('dir_name')->defaultValue('%kernel.root_dir%/EzPublishMigrations')->cannotBeEmpty()->end()
-            ->scalarNode('namespace')->defaultValue('Application\Migrations')->cannotBeEmpty()->end()
-            ->scalarNode('table_name')->defaultValue('ezmigration_versions')->cannotBeEmpty()->end()
-            ->scalarNode('name')->defaultValue('Application Migrations')->end()
-            ->scalarNode('ez_user')->defaultValue('admin')->cannotBeEmpty()->end()
+                ->scalarNode('ez_migrations_user')
+                    ->info('The login name of the user performing the migrations.')
+                    ->defaultValue('admin')
+                    ->cannotBeEmpty()
+                ->end()
             ->end();
 
         return $treeBuilder;
