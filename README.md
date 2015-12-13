@@ -1,6 +1,7 @@
 # eZ Publish/Platform Migrations
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/kreait/ezpublish-migrations-bundle.svg)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/aa58cc1a-da57-4ced-81f1-55bee80b88e3/mini.png)](https://insight.sensiolabs.com/projects/aa58cc1a-da57-4ced-81f1-55bee80b88e3)
 [![License](http://img.shields.io/badge/Licence-MIT-blue.svg)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
 [![Gitter](https://img.shields.io/badge/gitter-join%20chat-ff69b4.svg)](https://gitter.im/kreait/ezpublish-migrations-bundle)
 
