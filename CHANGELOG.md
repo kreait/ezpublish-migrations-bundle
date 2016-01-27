@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 3.0.1 - 2016-01-27
 
 - Added platform hint in `composer.json` to ensure PHP 5.4 compatibility.
   - PHP <5.5 support is dropped in [doctrine/migrations 1.3](https://github.com/doctrine/migrations/releases/tag/v1.3.0)
