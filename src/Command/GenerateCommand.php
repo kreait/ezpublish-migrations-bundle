@@ -16,8 +16,18 @@ use Doctrine\Bundle\MigrationsBundle\Command\MigrationsGenerateDoctrineCommand;
  */
 class GenerateCommand extends MigrationsGenerateDoctrineCommand
 {
-    protected $ezMigrationTemplate =
-            '<?php
+    protected function configure()
+    {
+        parent::configure();
+
+        $this->setName('ezpublish:migrations:generate');
+        $this->setDescription('Generate a blank eZ Publish/Platform enabled migration class');
+    }
+
+    protected function getTemplate()
+    {
+        return <<<'TEMPLATE'
+<?php
 namespace <namespace>;
 
 use Kreait\EzPublish\MigrationsBundle\Migrations\EzPublishMigration;
@@ -50,18 +60,7 @@ class Version<version> extends EzPublishMigration
 <down>
     }
 }
-';
 
-    protected function configure()
-    {
-        parent::configure();
-
-        $this->setName('ezpublish:migrations:generate');
-        $this->setDescription('Generate a blank eZ Publish/Platform enabled migration class');
-    }
-
-    protected function getTemplate()
-    {
-        return $this->ezMigrationTemplate;
+TEMPLATE;
     }
 }
