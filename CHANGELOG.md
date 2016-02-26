@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 4.0 - 2016-02-26
+
+- Drops support for PHP <5.5 due to new minimum version of [doctrine/migrations 1.3](https://github.com/doctrine/migrations/releases/tag/v1.3.0)
+
 ## 3.0.1 - 2016-01-27
 
 - Added platform hint in `composer.json` to ensure PHP 5.4 compatibility.
