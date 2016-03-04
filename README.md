@@ -6,6 +6,13 @@
 
 Migrations for eZ Publish/Platform.
 
+- [Features](#features)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Known Issues](#known-issues)
+- [Alternatives](#alternatives)
+
 ## Features
 
 In addition to the commands from the [DoctrineMigrationsBundle](http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html),
@@ -97,6 +104,9 @@ see [Create new content example](src/Resources/doc/examples/03-create-new-conten
 When you create a migration using only eZ Publish's API methods, no SQL statements are executed in terms of the
 DoctrineMigrationsBundle. This results in the following message:
 
-```
-Migration was executed but did not result in any SQL statements.
-```
+`Migration was executed but did not result in any SQL statements.`
+
+## Alternatives
+
+- [kaliop/ezmigrationbundle](https://github.com/kaliop-uk/ezmigrationbundle) is a high level bundle that lets you 
+  define content migrations in YAML files.
