@@ -57,25 +57,40 @@ ezpublish_migrations:
 The usage is [identical to Symfony's DoctrineMigrationBundle](http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html),
 with the addition of the following command:
 
+```bash
+# Generate a blank eZ Publish/Platform enabled migration class
+$ ezpublish:migrations:generate
 ```
-ezpublish:migrations:generate # Generate a blank eZ Publish/Platform enabled migration class
-```
+
+You can access the eZ Repository inside a migration with `$this->repository`.
 
 See [src/Resources/doc/examples](src/Resources/doc/examples) eZ Publish related example migrations.
 
-### Changing the current migration user during a migration
+### Helper methods
+
+#### Changing the current migration user during a migration
 
 You can change the current eZ Publish user inside a migration by issuing the following command:
 
 ```php
+// All subsequent calls will be made as the user with the given name
 $this->changeMigrationUser('another_username');
 ```
 
 and restore the default Migration user by using:
 
 ```php
+// Restores the current user to the configured migrations user.
 $this->restoreDefaultMigrationUser();
 ```
+
+#### Quickly create simple content
+
+```php
+$this->createContent($parentLocationId, $contentTypeIdentifier, $languageCode, array $fields);
+```
+
+see [Create new content example](src/Resources/doc/examples/03-create-new-content.md)
 
 ## Known issues
 
