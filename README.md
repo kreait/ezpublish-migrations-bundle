@@ -61,6 +61,8 @@ with the addition of the following command:
 ezpublish:migrations:generate # Generate a blank eZ Publish/Platform enabled migration class
 ```
 
+See [src/Resources/doc/examples](src/Resources/doc/examples) eZ Publish related example migrations.
+
 ### Changing the current migration user during a migration
 
 You can change the current eZ Publish user inside a migration by issuing the following command:
@@ -74,8 +76,6 @@ and restore the default Migration user by using:
 ```php
 $this->restoreDefaultMigrationUser();
 ```
-
-See [src/Resources/doc/examples](src/Resources/doc/examples) for more usage examples.
 
 ## Known issues
 
