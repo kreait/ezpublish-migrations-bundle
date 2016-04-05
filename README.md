@@ -6,13 +6,6 @@
 
 Migrations for eZ Publish/Platform.
 
-- [Features](#features)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [Known Issues](#known-issues)
-- [Alternatives](#alternatives)
-
 ## Features
 
 In addition to the commands from the [DoctrineMigrationsBundle](http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html),
@@ -22,6 +15,14 @@ eZ Publish/Platform related changes.
 - Automatically sets the active eZ user performing the changes (default: `admin`)
 - Allows the quick change of the currently active user, e.g. for creating new content in the name of a certain user.
 - Adds a shorthand method to create new content
+
+If you know Doctrine Migrations, you will feel right at home.
+
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Known Issues](#known-issues)
+- [Alternatives](#alternatives)
 
 ## Installation
 
