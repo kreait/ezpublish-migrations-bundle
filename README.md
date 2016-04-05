@@ -1,8 +1,9 @@
 # eZ Publish/Platform Migrations
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/kreait/ezpublish-migrations-bundle.svg)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
+[![Total Downloads](https://img.shields.io/packagist/dt/kreait/ezpublish-migrations-bundle.svg)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/aa58cc1a-da57-4ced-81f1-55bee80b88e3/mini.png)](https://insight.sensiolabs.com/projects/aa58cc1a-da57-4ced-81f1-55bee80b88e3)
-[![License](http://img.shields.io/badge/Licence-MIT-blue.svg)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
 
 Migrations for eZ Publish/Platform.
 
