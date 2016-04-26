@@ -9,12 +9,14 @@
 
 namespace Kreait\EzPublish\MigrationsBundle\Migrations;
 
+use Doctrine\DBAL\Migrations\AbortMigrationException;
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 use eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException;
 use eZ\Publish\API\Repository\Exceptions\ContentValidationException;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\Content\Content;
+use eZ\Publish\API\Repository\Values\User\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
@@ -23,11 +25,7 @@ abstract class EzPublishMigration extends AbstractMigration implements Container
     use ContainerAwareTrait;
 
     /**
-     * The username of the default migration user.
-     *
-     * @var string
      */
-    private $defaultMigrationUser;
 
     /**
      * @var \eZ\Publish\API\Repository\Repository
@@ -36,14 +34,22 @@ abstract class EzPublishMigration extends AbstractMigration implements Container
 
     /**
      * Initializes eZ Publish related service shortcuts.
+     *
+     * @throws AbortMigrationException if the repository could not be retrieved
      */
     protected function pre()
     {
-        $this->repository = $this->container->get('ezpublish.api.repository');
+        try {
+            $this->repository = $this->container->get('ezpublish.api.repository');
+        } catch (\Exception $e) {
+            throw new AbortMigrationException($e->getMessage(), $e->getCode(), $e);
+        }
 
-        $this->defaultMigrationUser = $this->container->getParameter('ezpublish_migrations.ez_migrations_user');
-
-        $this->setDefaultMigrationUser();
+        try {
+            $this->setDefaultUser();
+        } catch (\Exception $e) {
+            throw new AbortMigrationException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     public function preUp(Schema $schema)
@@ -59,46 +65,76 @@ abstract class EzPublishMigration extends AbstractMigration implements Container
     }
 
     /**
-     * Sets the current user to the user with the given name.
+     * Sets the current ez user.
      *
-     * @param string $username
+     * @param int|string|User $user
+     *
+     * @throws NotFoundException if the given user does not exist.
      */
-    protected function changeMigrationUser($username)
+    protected function setCurrentUser($user)
     {
-        $this->setMigrationUser($username);
+        if (is_numeric($user)) {
+            $user = $this->repository->getUserService()->loadUser((int) $user);
+        } elseif (!($user instanceof User)) {
+            $user = $this->repository->getUserService()->loadUserByLogin($user);
+        }
+
+        $this->repository->setCurrentUser($user);
     }
 
     /**
-     * Sets the current user to the default migration user.
+     * Restores the current user to be the defined default user.
+     *
+     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException if the default migrations user has not been defined
+     * @throws NotFoundException                                                         if the default user does not exist.
      */
-    protected function restoreDefaultMigrationUser()
+    protected function restoreDefaultUser()
     {
-        $this->setDefaultMigrationUser();
+        $this->setDefaultUser();
     }
 
     /**
      * Sets the current ez user the the default migration user.
+     *
+     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException if the default migrations user has not been defined
+     * @throws NotFoundException                                                         if the default user does not exist.
      */
-    private function setDefaultMigrationUser()
+    private function setDefaultUser()
     {
-        $this->setMigrationUser($this->defaultMigrationUser);
+        $this->setCurrentUser($this->container->getParameter('ezpublish_migrations.ez_migrations_user'));
     }
 
     /**
-     * Sets the current ez user to the user with the given user name.
+     * Sets the current user to the user with the given name.
+     *
+     * @deprecated 4.1.0 use $this->setCurrentUser($userNameOrId) instead
      *
      * @param string $username
+     *
+     * @throws NotFoundException if the given user does not exist.
      */
-    private function setMigrationUser($username)
+    protected function changeMigrationUser($username)
     {
-        $this->repository->setCurrentUser(
-            $this->repository->getUserService()->loadUserByLogin($username)
-        );
+        $this->setCurrentUser($username);
+    }
+
+    /**
+     * Sets the current user to the default migration user.
+     *
+     * @deprecated 4.1.0 use $this->restoreDefaultUser() instead
+     *
+     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException if the default migrations user has not been defined
+     * @throws NotFoundException                                                         if the default user does not exist.
+     */
+    protected function restoreDefaultMigrationUser()
+    {
+        $this->setDefaultUser();
     }
 
     /**
      * Helper to quickly create content.
      *
+     * @deprecated 4.1.0 Use $this->getHelper('content')->createContent() instead
      * @see https://github.com/ezsystems/CookbookBundle/blob/master/Command/CreateContentCommand.php eZ Publish Cookbook
      *
      * Usage:
