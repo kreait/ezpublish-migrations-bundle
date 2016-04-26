@@ -1,8 +1,21 @@
 # CHANGELOG
 
+## Unreleased
+
+- Adds helper sets that you can access inside a migration with `$this->getHelper('content');` or
+  `$this->contentHelper;`
+- Introduces the following method changes
+
+Deprecated method | Replacement
+--- | ---
+`$this->changeMigrationUser($username)` | `$this->setCurrentUser($user)`<br/>with `$user` being a User object, a User ID or a User Name  
+`$this->restoreDefaultMigrationUser()` | `$this->restoreDefaultUser()`
+`$this->createContent(...)` | `$this->contentHelper->createContent(...)` or <br/>`$this->getHelper('content')->createContent(...)`
+
 ## 4.0 - 2016-02-26
 
-- Drops support for PHP <5.5 due to new minimum version of [doctrine/migrations 1.3](https://github.com/doctrine/migrations/releases/tag/v1.3.0)
+- Drops support for PHP &lt;5.5 due to new minimum version of 
+  [doctrine/migrations 1.3](https://github.com/doctrine/migrations/releases/tag/v1.3.0)
 
 ## 3.0.1 - 2016-01-27
 

@@ -17,20 +17,58 @@ use eZ\Publish\API\Repository\Exceptions\ContentValidationException;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\User\User;
+use Kreait\EzPublish\MigrationsBundle\Helper\ContentHelper;
+use Kreait\EzPublish\MigrationsBundle\Helper\HelperSet;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
+/**
+ * @property ContentHelper $contentHelper
+ */
 abstract class EzPublishMigration extends AbstractMigration implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
     /**
-     */
-
-    /**
      * @var \eZ\Publish\API\Repository\Repository
      */
     protected $repository;
+
+    protected $helperSet;
+
+    protected function getHelperSet()
+    {
+        if (!$this->helperSet) {
+            $this->helperSet = new HelperSet([
+                new ContentHelper($this->container),
+            ]);
+        }
+
+        return $this->helperSet;
+    }
+
+    public function __get($name)
+    {
+        if (preg_match('/^(?P<name>.+)Helper$/i', $name, $matches)) {
+            return $this->getHelperSet()->get(lcfirst($matches['name']));
+        }
+
+        trigger_error('Call to undefined property '.__CLASS__.'::'.$name, E_USER_NOTICE);
+
+        return;
+    }
+
+    /**
+     * Returns the helper with the given name.
+     *
+     * @param string $name
+     *
+     * @return \Kreait\EzPublish\MigrationsBundle\Helper
+     */
+    protected function getHelper($name)
+    {
+        return $this->getHelperSet()->get($name);
+    }
 
     /**
      * Initializes eZ Publish related service shortcuts.
@@ -157,21 +195,6 @@ abstract class EzPublishMigration extends AbstractMigration implements Container
      */
     protected function createContent($parentLocationId, $contentTypeIdentifier, $languageCode, array $fields)
     {
-        $contentService = $this->repository->getContentService();
-        $locationService = $this->repository->getLocationService();
-        $contentTypeService = $this->repository->getContentTypeService();
-
-        $contentType = $contentTypeService->loadContentTypeByIdentifier($contentTypeIdentifier);
-        $contentCreateStruct = $contentService->newContentCreateStruct($contentType, $languageCode);
-
-        foreach ($fields as $key => $value) {
-            $contentCreateStruct->setField($key, $value);
-        }
-
-        $locationCreateStruct = $locationService->newLocationCreateStruct($parentLocationId);
-        $draft = $contentService->createContent($contentCreateStruct, [$locationCreateStruct]);
-        $content = $contentService->publishVersion($draft->getVersionInfo());
-
-        return $content;
+        return $this->contentHelper->createContent($parentLocationId, $contentTypeIdentifier, $languageCode, $fields);
     }
 }
