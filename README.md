@@ -1,11 +1,8 @@
 # eZ Publish/Platform Migrations
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/kreait/ezpublish-migrations-bundle.svg)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
-[![Total Downloads](https://img.shields.io/packagist/dt/kreait/ezpublish-migrations-bundle.svg)](https://packagist.org/packages/kreait/ezpublish-migrations-bundle)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/aa58cc1a-da57-4ced-81f1-55bee80b88e3/mini.png)](https://insight.sensiolabs.com/projects/aa58cc1a-da57-4ced-81f1-55bee80b88e3)
-
 Migrations for eZ Publish/Platform.
+
+Abandoned/Archived: This bundle hasn't received updates since 2016, is far behind the current development of eZ Publish/Platform, and thus has been marked as archived/abandoned. Please switch to [kaliop/ezmigrationbundle](https://github.com/kaliop-uk/ezmigrationbundle).
 
 ## Features
 
